@@ -16,7 +16,7 @@ CREATE TABLE `adherent` (
 	`adh_souets` 							INT(11) 								NOT NULL DEFAULT '0',
 	CONSTRAINT pk_adherent					PRIMARY KEY (`adh_id`)
 )
-COLLATE='utf8mb4_general_ci'
+COLLATE='utf8_general_ci'
 ENGINE=InnoDB
 ;
 
@@ -33,7 +33,7 @@ CREATE TABLE `message` (
 	CONSTRAINT fk_mes_adh_id_destinataire	FOREIGN KEY (`mes_adh_id_destinataire`)	REFERENCES `adherent` (`adh_id`),
 	INDEX `mes_adh_id_emetteur_mes_adh_id_destinataire` (`mes_adh_id_emetteur`, `mes_adh_id_destinataire`)
 )
-COLLATE='utf8mb4_general_ci'
+COLLATE='utf8_general_ci'
 ENGINE=InnoDB
 ;
 
@@ -44,7 +44,7 @@ CREATE TABLE `categorie` (
 	`cat_nom`								VARCHAR(50)								NOT NULL,
 	CONSTRAINT pk_categorie					PRIMARY KEY (`cat_id`)
 )
-COLLATE='utf8mb4_general_ci'
+COLLATE='utf8_general_ci'
 ENGINE=InnoDB
 ;
 
@@ -55,7 +55,7 @@ CREATE TABLE `liste_type_prestation` (
 	`ltp_nom`								VARCHAR(50)								NOT NULL DEFAULT '0',
 	CONSTRAINT pk_liste_type_prestation		PRIMARY KEY (`ltp_id`)
 )
-COLLATE='utf8mb4_general_ci'
+COLLATE='utf8_general_ci'
 ENGINE=InnoDB
 ;
 
@@ -81,7 +81,7 @@ CREATE TABLE `prestation` (
 	CONSTRAINT c_date_realisation			CHECK (`pre_date_realisation` IS NULL OR `pre_date_realisation` >= `pre_date_souhaitee_debut`),
 	INDEX `pre_cat_id` (`pre_cat_id`)
 )
-COLLATE='utf8mb4_general_ci'
+COLLATE='utf8_general_ci'
 ENGINE=InnoDB
 ;
 

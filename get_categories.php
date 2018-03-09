@@ -1,7 +1,7 @@
 <?php
 	
 	/*
-	* Récupération des adhérents
+	* Récupération des catégories
 	*/
 	
 	// Préparaton des infos nécessaires pour la transaction
@@ -12,7 +12,23 @@
 	if($db->database){
 
 		// préparation de la requête
-		$query = 'SELECT adh_id, adh_prenom, adh_nom FROM adherent';
+		$query = 'SELECT
+			cat_id,
+			cat_nom,
+			(SELECT COUNT(*)
+				FROM prestation
+				INNER JOIN liste_type_prestation ON pre_ltp_id = ltp_id
+				WHERE pre_cat_id = cat_id
+				AND pre_date_realisation IS NULL
+				AND ltp_nom LIKE "offre") AS cat_nombre_offres, 
+			(SELECT COUNT(*)
+				FROM prestation
+				INNER JOIN liste_type_prestation ON pre_ltp_id = ltp_id
+				WHERE pre_cat_id = cat_id
+				AND pre_date_realisation IS NULL
+				AND ltp_nom LIKE "demande") AS cat_nombre_demandes 
+			FROM categorie
+		';
 
 		$stmt = $db->database->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 		$stmt->execute();
@@ -24,7 +40,12 @@
 		if($stmt->rowCount() > 0){
 
 			// récupération des résultats
-			$response["adherents"] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			// $response["categories"] = array_map("utf8_encode", $stmt->fetchAll(PDO::FETCH_ASSOC));
+			$response["categories"] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// echo '<pre>$response["categories"] : ';
+// print_r($response["categories"]);
+// echo '</pre>';
+// die();
 
 			// succès
 			$response["success"] = 1;
@@ -47,7 +68,7 @@
 		$code = CODE_SERVICE_UNAVAILABLE;
 
 	}
-
+	
 
 	// envoi du résultat
 	require_once __DIR__ . '/transaction/display_result.php';

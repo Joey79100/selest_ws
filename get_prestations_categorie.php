@@ -1,7 +1,7 @@
 <?php
 	
 	/*
-	* Récupération d'un adhérent
+	* Récupération des offres actives d'une catégorie
 	*/
 	
 	// Préparaton des infos nécessaires pour la transaction
@@ -10,26 +10,34 @@
 
 	// si la connexion à la base a fonctionné
 	if($db->database){
-		
+
 		// vérification de la présence des données
-		if (isset($_GET["adh_id"])) {
-			$adh_id = $_GET['adh_id'];
+		if (isset($_GET["type"]) AND $_GET["type"] == 'offre' OR $_GET["type"] == 'demande') {
 			
+			$type_prestation = $_GET["type"];
+
 			// préparation de la requête
-			$query = 'SELECT adh_id, adh_prenom, adh_nom, adh_souets FROM adherent WHERE adh_id = :adh_id';
+			$query = "SELECT pre_id, cat_id, cat_nom, pre_date_souhaitee_debut, pre_date_souhaitee_fin, pre_description, pre_souets
+				FROM prestation
+				INNER JOIN categorie ON pre_cat_id = cat_id
+				INNER JOIN liste_type_prestation ON pre_ltp_id = ltp_id
+				WHERE ltp_nom LIKE :type_prestation
+				AND pre_date_realisation IS NULL
+			";
 
 			$stmt = $db->database->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 			$stmt->execute(array(
-				':adh_id' => $adh_id
+				':type_prestation' => $type_prestation
 			));
 			$db->close();
 			
 			
+			
 			// récupération des résultats s'ils existent
 			if($stmt->rowCount() > 0){
-				
+
 				// récupération des résultats
-				$response["adherents"] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				$response["offres"] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 				
 				// succès
 				$response["success"] = 1;
@@ -44,14 +52,11 @@
 
 			}
 
-			$stmt->closeCursor();
-			
-
 		} else {
 
 			// requête invalide
 			$response["success"] = 0;
-			$response["message"] = "Requête invalide - champs manquants";
+			$response["message"] = "Requête invalide - champs manquants ou invalides";
 			$code = CODE_BAD_REQUEST;
 
 		}
