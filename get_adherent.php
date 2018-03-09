@@ -9,48 +9,60 @@
 
 
 
-	// vérification de la présence des données
-	if (isset($_GET["adh_id"])) {
-		$adh_id = $_GET['adh_id'];
+	// si la connexion à la base a fonctionné
+	if($db->database){
 		
-		// préparation de la requête
-		$query = 'SELECT adh_id, adh_prenom, adh_nom FROM adherent WHERE adh_id = :adh_id';
+		// vérification de la présence des données
+		if (isset($_GET["adh_id"])) {
+			$adh_id = $_GET['adh_id'];
+			
+			// préparation de la requête
+			$query = 'SELECT adh_id, adh_prenom, adh_nom FROM adherent WHERE adh_id = :adh_id';
 
-		$stmt = $db->database->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-		$stmt->execute(array(
-			':adh_id' => $adh_id
-		));
-		$db->close();
-		
-		
-		// récupération des résultats s'ils existent
-		if($stmt->rowCount() > 0){
+			$stmt = $db->database->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+			$stmt->execute(array(
+				':adh_id' => $adh_id
+			));
+			$db->close();
 			
-			// récupération des résultats
-			$response["adherents"] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			
-			// succès
-			$response["success"] = 1;
-			$code = CODE_OK;
+			// récupération des résultats s'ils existent
+			if($stmt->rowCount() > 0){
+				
+				// récupération des résultats
+				$response["adherents"] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				
+				// succès
+				$response["success"] = 1;
+				$code = CODE_OK;
+
+			} else {
+				
+				// pas de donnée
+				$response["success"] = 0;
+				$response["message"] = "Aucun résultat";
+				$code = CODE_NOT_FOUND;
+
+			}
+
+			$stmt->closeCursor();
+			
 
 		} else {
-			
-			// pas de donnée
+
+			// requête invalide
 			$response["success"] = 0;
-			$response["message"] = "Aucun résultat";
-			$code = CODE_NOT_FOUND;
+			$response["message"] = "Requête invalide - champs manquants";
+			$code = CODE_BAD_REQUEST;
 
 		}
 
-		$stmt->closeCursor();
-		
-
 	} else {
-
-		// requête invalide
+		
+		// pas de donnée
 		$response["success"] = 0;
-		$response["message"] = "Requête invalide - champs manquants";
-		$code = CODE_BAD_REQUEST;
+		$response["message"] = "Impossible de contacter la base de données";
+		$code = CODE_SERVICE_UNAVAILABLE;
 
 	}
 
