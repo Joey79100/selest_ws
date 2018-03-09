@@ -63,18 +63,27 @@ ENGINE=InnoDB
 
 CREATE TABLE `prestation` (
 	`pre_id`								INT(11)									NOT NULL AUTO_INCREMENT,
+	`pre_adh_id_auteur`						INT										NOT NULL,
+	`pre_adh_id_realisateur`				INT										NOT NULL,
 	`pre_cat_id` 							INT(11)									NOT NULL,
 	`pre_ltp_id` 							INT(11)									NOT NULL,
-	`pre_date_souhaitee_debut`				DATE									NOT NULL,
-	`pre_date_souhaitee_fin`				DATE									NOT NULL,
-	`pre_date_realisation`					DATE									NOT NULL,
+	`pre_date_souhaitee_debut`				DATE									NULL DEFAULT NULL,
+	`pre_date_souhaitee_fin`				DATE									NULL DEFAULT NULL,
+	`pre_date_realisation`					DATE									NULL DEFAULT NULL,
 	`pre_description`						VARCHAR(100)							NOT NULL,
 	`pre_souets` 							INT(11)									NOT NULL,
 	CONSTRAINT pk_prestation				PRIMARY KEY (`pre_id`),
 	CONSTRAINT fk_pre_cat_id				FOREIGN KEY (`pre_cat_id`)				REFERENCES `categorie` (`cat_id`),
 	CONSTRAINT fk_pre_ltp_id				FOREIGN KEY (`pre_ltp_id`)				REFERENCES `liste_type_prestation` (`ltp_id`),
+	CONSTRAINT fk_pre_adh_id_auteur			FOREIGN KEY (`pre_adh_id_auteur`)		REFERENCES `adherent` (`adh_id`),
+	CONSTRAINT fk_pre_adh_id_realisateur	FOREIGN KEY (`pre_adh_id_realisateur`)	REFERENCES `adherent` (`adh_id`),
 	INDEX `pre_cat_id` (`pre_cat_id`)
 )
 COLLATE='utf8mb4_general_ci'
 ENGINE=InnoDB
 ;
+
+
+
+INSERT INTO `liste_type_prestation` (`ltp_nom`) VALUES ('offre');
+INSERT INTO `liste_type_prestation` (`ltp_nom`) VALUES ('demande');
