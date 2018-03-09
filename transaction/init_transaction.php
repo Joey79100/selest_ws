@@ -16,6 +16,7 @@ define("CODE_BAD_REQUEST", 400);				// la requête est incorrecte
 define("CODE_NOT_FOUND", 404);					// requête correcte mais aucun contenu
 define("CODE_INTERNAL_SERVER_ERROR", 500);		// requête correcte mais un problème est survenu
 define("CODE_NOT_IMPLEMENTED", 501);			// requête correcte mais pas encore implémentée
+define("CODE_SERVICE_UNAVAILABLE", 503);		// base de données non disponible
 
 
 // liste des types de données pour les statements SQL

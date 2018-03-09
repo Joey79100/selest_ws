@@ -1,7 +1,7 @@
 <?php
  
 /*
- * Following code will send the result of the request and set the headers accordingly
+ * On envoie le résultat de la requête et on paramètre l'en-tête du document en JSON
  */
 
 // echoing JSON response

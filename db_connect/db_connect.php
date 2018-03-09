@@ -25,9 +25,17 @@ class DB_CONNECT {
         // import database connection variables
         require_once __DIR__ . '/db_config.php';
  
-        // Connecting to mysql database
-        $this->database = mysqli_connect(DB_SERVER, DB_USER, DB_PASSWORD, DB_DATABASE) or die(mysqli_error());
- 
+        // // connecting to database
+		try{
+			$this->database = new PDO(DB_ENGINE.':host='.DB_SERVER.';port='.DB_PORT.";dbname=".DB_DATABASE, DB_USER, DB_PASSWORD);
+		} catch (PDOException $e) {
+			$this->database = null;
+			// die('Erreur de connexion : ' . $e->getMessage() . '<br/>');
+		}
+
+		// $database = new PDO(DB_ENGINE.':host='.DB_SERVER.';port='.DB_PORT.";dbname=".DB_DATABASE, DB_USER, DB_PASSWORD);
+		// if($database) $this->database = $database;
+
         // returing connection cursor
         return $this->database;
     }
@@ -37,7 +45,7 @@ class DB_CONNECT {
      */
     function close() {
         // closing db connection
-        mysqli_close($this->database);
+        $this->database = null;
     }
  
 }
