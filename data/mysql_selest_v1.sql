@@ -64,7 +64,6 @@ ENGINE=InnoDB
 CREATE TABLE `prestation` (
 	`pre_id`								INT(11)									NOT NULL AUTO_INCREMENT,
 	`pre_adh_id_auteur`						INT										NOT NULL,
-	`pre_adh_id_realisateur`				INT										NULL DEFAULT NULL,
 	`pre_cat_id` 							INT(11)									NOT NULL,
 	`pre_ltp_id` 							INT(11)									NOT NULL,
 	`pre_date_souhaitee_debut`				DATE									NULL DEFAULT NULL,
@@ -72,6 +71,7 @@ CREATE TABLE `prestation` (
 	`pre_date_realisation`					DATE									NULL DEFAULT NULL,
 	`pre_description`						VARCHAR(100)							NOT NULL,
 	`pre_souets` 							INT(11)									NOT NULL,
+	`pre_nb_participants_demande`			INT(11)									NULL DEFAULT NULL,
 	CONSTRAINT pk_prestation				PRIMARY KEY (`pre_id`),
 	CONSTRAINT fk_pre_cat_id				FOREIGN KEY (`pre_cat_id`)				REFERENCES `categorie` (`cat_id`),
 	CONSTRAINT fk_pre_ltp_id				FOREIGN KEY (`pre_ltp_id`)				REFERENCES `liste_type_prestation` (`ltp_id`),
@@ -80,6 +80,19 @@ CREATE TABLE `prestation` (
 	CONSTRAINT c_dates_souhaitee			CHECK (`pre_date_souhaitee_fin` IS NULL OR `pre_date_souhaitee_fin` >= `pre_date_souhaitee_debut`),
 	CONSTRAINT c_date_realisation			CHECK (`pre_date_realisation` IS NULL OR `pre_date_realisation` >= `pre_date_souhaitee_debut`),
 	INDEX `pre_cat_id` (`pre_cat_id`)
+)
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
+
+
+
+CREATE TABLE `rel_prestation_adherent` (
+	`rpa_pre_id`							INT										NOT NULL,
+	`rpa_adh_id`							INT										NOT NULL,
+	CONSTRAINT pk_rel_prestation_adherent	PRIMARY KEY (`rpa_pre_id`, `rpa_adh_id`),
+	CONSTRAINT fk_rpa_pre_id				FOREIGN KEY (`rpa_pre_id`)				REFERENCES `prestation` (`pre_id`),
+	CONSTRAINT fk_rpa_adh_id				FOREIGN KEY (`rpa_adh_id`)				REFERENCES `adherent` (`adh_id`)
 )
 COLLATE='utf8_general_ci'
 ENGINE=InnoDB
