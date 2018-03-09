@@ -64,7 +64,7 @@ ENGINE=InnoDB
 CREATE TABLE `prestation` (
 	`pre_id`								INT(11)									NOT NULL AUTO_INCREMENT,
 	`pre_adh_id_auteur`						INT										NOT NULL,
-	`pre_adh_id_realisateur`				INT										NOT NULL,
+	`pre_adh_id_realisateur`				INT										NULL DEFAULT NULL,
 	`pre_cat_id` 							INT(11)									NOT NULL,
 	`pre_ltp_id` 							INT(11)									NOT NULL,
 	`pre_date_souhaitee_debut`				DATE									NULL DEFAULT NULL,
@@ -77,6 +77,8 @@ CREATE TABLE `prestation` (
 	CONSTRAINT fk_pre_ltp_id				FOREIGN KEY (`pre_ltp_id`)				REFERENCES `liste_type_prestation` (`ltp_id`),
 	CONSTRAINT fk_pre_adh_id_auteur			FOREIGN KEY (`pre_adh_id_auteur`)		REFERENCES `adherent` (`adh_id`),
 	CONSTRAINT fk_pre_adh_id_realisateur	FOREIGN KEY (`pre_adh_id_realisateur`)	REFERENCES `adherent` (`adh_id`),
+	CONSTRAINT c_dates_souhaitee			CHECK (`pre_date_souhaitee_fin` IS NULL OR `pre_date_souhaitee_fin` >= `pre_date_souhaitee_debut`),
+	CONSTRAINT c_date_realisation			CHECK (`pre_date_realisation` IS NULL OR `pre_date_realisation` >= `pre_date_souhaitee_debut`),
 	INDEX `pre_cat_id` (`pre_cat_id`)
 )
 COLLATE='utf8mb4_general_ci'
