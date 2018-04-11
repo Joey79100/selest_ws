@@ -12,7 +12,7 @@
 	if($db->database){
 
 		// vérification de la présence des données
-		if (isset($_GET["type"]) AND $_GET["type"] == 'offre' OR $_GET["type"] == 'demande') {
+		if (isset($_GET["type"]) AND ($_GET["type"] == 'offre' OR $_GET["type"] == 'demande')) {
 			
 			$type_prestation = $_GET["type"];
 
