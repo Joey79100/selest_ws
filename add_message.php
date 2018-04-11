@@ -1,7 +1,7 @@
 <?php
 	
 	/*
-	* Ajout d'une prestation
+	* Ajout d'un message
 	*/
 	
 	// Préparaton des infos nécessaires pour la transaction
@@ -13,39 +13,25 @@
 		
 		// vérification de la présence des données
 		if (
-				isset($_POST["pre_adh_id"])
-			AND isset($_POST["pre_cat_id"])
-			AND isset($_POST["pre_ltp_id"])
-			AND isset($_POST["pre_description"])
-			AND isset($_POST["pre_souets"])
+				isset($_POST["mes_adh_id_emetteur"])
+			AND isset($_POST["mes_adh_id_destinataire"])
+			AND isset($_POST["mes_texte"])
 		) {
 
 			// paramètres obligatoires
-			$pre_adh_id_auteur = $_POST['pre_adh_id'];
-			$pre_cat_id = $_POST['pre_cat_id'];
-			$pre_ltp_id = $_POST['pre_ltp_id'];
-			$pre_description = $_POST['pre_description'];
-			$pre_souets = $_POST['pre_souets'];
-
-			// paramètres optionnels
-			$pre_date_souhaitee_debut = $_POST['pre_date_souhaitee_debut'] ?? null;
-			$pre_date_souhaitee_fin = $_POST['pre_date_souhaitee_fin'] ?? null;
-			$pre_date_realisation = $_POST['pre_date_realisation'] ?? null;
+			$mes_adh_id_emetteur = $_POST['mes_adh_id_emetteur'];
+			$mes_adh_id_destinataire = $_POST['mes_adh_id_destinataire'];
+			$mes_texte = $_POST['mes_texte'];
 
 			// préparation de la requête
-			$query = "INSERT INTO prestation (pre_adh_id, pre_cat_id, pre_ltp_id, pre_date_souhaitee_debut, pre_date_souhaitee_fin, pre_date_realisation, pre_description, pre_souets)
-				VALUES (:pre_adh_id, :pre_cat_id, :pre_ltp_id, :pre_date_souhaitee_debut, :pre_date_souhaitee_fin, :pre_date_realisation, :pre_description, :pre_souets)";
+			$query = "INSERT INTO message (mes_adh_id_emetteur, mes_adh_id_destinataire, mes_texte)
+				VALUES (:mes_adh_id_emetteur, :mes_adh_id_destinataire, :mes_texte)";
 
 			// préparation des paramètres
 			$parametres = array(
-				':pre_adh_id' => $pre_adh_id,
-				':pre_cat_id' => $pre_cat_id,
-				':pre_ltp_id' => $pre_ltp_id,
-				':pre_date_souhaitee_debut' => $pre_date_souhaitee_debut,
-				':pre_date_souhaitee_fin' => $pre_date_souhaitee_fin,
-				':pre_date_realisation' => $pre_date_realisation,
-				':pre_description' => $pre_description,
-				':pre_souets' => $pre_souets
+				':mes_adh_id_emetteur' => $mes_adh_id_emetteur,
+				':mes_adh_id_destinataire' => $mes_adh_id_destinataire,
+				':mes_texte' => $mes_texte
 			);
 
 			$stmt = $db->database->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
