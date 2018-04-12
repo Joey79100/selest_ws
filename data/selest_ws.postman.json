@@ -1,0 +1,485 @@
+{
+	"info": {
+		"name": "selest_ws",
+		"_postman_id": "085fd01a-2dde-bc3d-2f81-dc8d802e2af3",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Récupérer les catégories",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost/selest_ws/get_categories.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"selest_ws",
+						"get_categories.php"
+					]
+				},
+				"description": "Retourne toutes les catégories avec le nombre d'offres et le nombre de demandes actives (non réalisées) pour chacune d'elles"
+			},
+			"response": []
+		},
+		{
+			"name": "Récupérer conversation",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost/selest_ws/get_prestations_categorie.php?type=demande",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"selest_ws",
+						"get_prestations_categorie.php"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "demande",
+							"equals": true
+						}
+					]
+				},
+				"description": "Retourne toutes les offres"
+			},
+			"response": []
+		},
+		{
+			"name": "Récupérer les offres",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost/selest_ws/get_prestations_categorie.php?type=demande",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"selest_ws",
+						"get_prestations_categorie.php"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "demande",
+							"equals": true
+						}
+					]
+				},
+				"description": "Retourne toutes les offres"
+			},
+			"response": []
+		},
+		{
+			"name": "Récupérer adhérent",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost/selest_ws/get_adherent.php?adh_id=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"selest_ws",
+						"get_adherent.php"
+					],
+					"query": [
+						{
+							"key": "adh_id",
+							"value": "1",
+							"equals": true
+						}
+					]
+				},
+				"description": "Retourne les informations de l'adhérent d'ID 1"
+			},
+			"response": []
+		},
+		{
+			"name": "Récupérer conversation",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost/selest_ws/get_conversation.php?id_emetteur=3&id_destinataire=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"selest_ws",
+						"get_conversation.php"
+					],
+					"query": [
+						{
+							"key": "id_emetteur",
+							"value": "3",
+							"equals": true
+						},
+						{
+							"key": "id_destinataire",
+							"value": "2",
+							"equals": true
+						}
+					]
+				},
+				"description": "Retourne toutes les offres"
+			},
+			"response": []
+		},
+		{
+			"name": "Ajouter adhérent",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "adh_nom",
+							"value": "Haliday",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "adh_prenom",
+							"value": "Johnny",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "adh_telephone",
+							"value": "0501020304",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "adh_mobile",
+							"value": "0601020304",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "adh_email",
+							"value": "jean.michel@wanttodo.fr",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "adh_adresse",
+							"value": "1 route du feu allumé",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "adh_code_postal",
+							"value": "12345",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "adh_ville",
+							"value": "En cendre",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/selest_ws/add_adherent.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"selest_ws",
+						"add_adherent.php"
+					]
+				},
+				"description": "Ajoute un adhérent Johnny Haliday"
+			},
+			"response": []
+		},
+		{
+			"name": "Ajouter catégorie",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "cat_nom",
+							"value": "Chats",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/selest_ws/add_categorie.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"selest_ws",
+						"add_categorie.php"
+					]
+				},
+				"description": "Ajoute une catégorie Chats"
+			},
+			"response": []
+		},
+		{
+			"name": "Ajouter offre sans date",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "pre_adh_id",
+							"value": "1",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "pre_cat_id",
+							"value": "7",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "pre_ltp_id",
+							"value": "1",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "pre_date_souhaitee_debut",
+							"value": "",
+							"description": "",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "pre_date_souhaitee_fin",
+							"value": "",
+							"description": "",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "pre_date_realisation",
+							"value": "",
+							"description": "",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "pre_description",
+							"value": "Vente de chats empaillés",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "pre_souets",
+							"value": "0",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/selest_ws/add_prestation.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"selest_ws",
+						"add_prestation.php"
+					]
+				},
+				"description": "Ajoute une offre dans la catégorie 7 (chats) sans aucune date"
+			},
+			"response": []
+		},
+		{
+			"name": "Ajouter message",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "mes_adh_id_emetteur",
+							"value": "3",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "mes_adh_id_destinataire",
+							"value": "2",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "mes_texte",
+							"value": "Bonjour ma meilleure amie",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/selest_ws/add_message.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"selest_ws",
+						"add_message.php"
+					]
+				},
+				"description": "Ajoute un message envoyé par l'adhérent 3 (Criquette Rockwell) à l'adhérent 2 (Brenda Montgomery)"
+			},
+			"response": []
+		},
+		{
+			"name": "Ajouter réponse",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "pre_id",
+							"value": "2",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "adh_id",
+							"value": "1",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/selest_ws/add_reponse.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"selest_ws",
+						"add_reponse.php"
+					]
+				},
+				"description": "Ajoute une réponse de l'adhérent 1 à la prestation 2"
+			},
+			"response": []
+		},
+		{
+			"name": "Récupérer prestation",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost/selest_ws/get_prestation.php?pre_id=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"selest_ws",
+						"get_prestation.php"
+					],
+					"query": [
+						{
+							"key": "pre_id",
+							"value": "1",
+							"equals": true
+						}
+					]
+				},
+				"description": "Retourne les informations d'une prestation"
+			},
+			"response": []
+		},
+		{
+			"name": "Récupérer les demandes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost/selest_ws/get_prestations_categorie.php?type=offre",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"selest_ws",
+						"get_prestations_categorie.php"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "offre",
+							"equals": true
+						}
+					]
+				},
+				"description": "Retourne toutes les demandes"
+			},
+			"response": []
+		}
+	]
+}

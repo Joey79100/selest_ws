@@ -50,26 +50,28 @@
 
 			$stmt = $db->database->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 
-			// lancement de la requête - si insertion ok...
-			if($stmt->execute($parametres)){
+			try{
+
+				// lancement de la requête 
+				$stmt->execute($parametres);
 
 				// récupération de l'id inséré
 				$response["id"] = $db->database->lastInsertId();
-				
+
 				// succès
 				$response["success"] = 1;
 				$code = CODE_CREATED_CONTENT;
 
-			} else {
+			} catch(PDOException $e) {
 
 				// pas de donnée
 				$response["success"] = 0;
-				$response["message"] = $db->database->errorCode();
+				$response["error"] = $e->getCode();
+				$response["message"] = $e->getMessage();
 				$code = CODE_INTERNAL_SERVER_ERROR;
 
 			}
 
-			print_r($stmt->errorInfo());
 
 			$db->close();
 			$stmt->closeCursor();

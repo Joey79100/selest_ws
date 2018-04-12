@@ -1,7 +1,7 @@
 <?php
 	
 	/*
-	* Récupération des offres actives d'une catégorie
+	* Récupération des prestations (offres et demandes) actives d'une catégorie
 	*/
 	
 	// Préparaton des infos nécessaires pour la transaction
