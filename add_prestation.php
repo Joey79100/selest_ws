@@ -30,11 +30,10 @@
 			// paramètres optionnels
 			$pre_date_souhaitee_debut = $_POST['pre_date_souhaitee_debut'] ?? null;
 			$pre_date_souhaitee_fin = $_POST['pre_date_souhaitee_fin'] ?? null;
-			$pre_date_realisation = $_POST['pre_date_realisation'] ?? null;
 
 			// préparation de la requête
-			$query = "INSERT INTO prestation (pre_adh_id, pre_cat_id, pre_ltp_id, pre_date_souhaitee_debut, pre_date_souhaitee_fin, pre_date_realisation, pre_description, pre_souets)
-				VALUES (:pre_adh_id, :pre_cat_id, :pre_ltp_id, :pre_date_souhaitee_debut, :pre_date_souhaitee_fin, :pre_date_realisation, :pre_description, :pre_souets)";
+			$query = "INSERT INTO prestation (pre_adh_id, pre_cat_id, pre_ltp_id, pre_date_souhaitee_debut, pre_date_souhaitee_fin, pre_description, pre_souets)
+				VALUES (:pre_adh_id, :pre_cat_id, :pre_ltp_id, :pre_date_souhaitee_debut, :pre_date_souhaitee_fin, :pre_description, :pre_souets)";
 
 			// préparation des paramètres
 			$parametres = array(
@@ -43,7 +42,6 @@
 				':pre_ltp_id' => $pre_ltp_id,
 				':pre_date_souhaitee_debut' => $pre_date_souhaitee_debut,
 				':pre_date_souhaitee_fin' => $pre_date_souhaitee_fin,
-				':pre_date_realisation' => $pre_date_realisation,
 				':pre_description' => $pre_description,
 				':pre_souets' => $pre_souets
 			);
@@ -64,7 +62,6 @@
 
 			} catch(PDOException $e) {
 
-				// pas de donnée
 				$response["success"] = 0;
 				$response["error"] = $e->getCode();
 				$response["message"] = $e->getMessage();

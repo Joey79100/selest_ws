@@ -15,6 +15,8 @@
 		if (isset($_GET["type"]) AND ($_GET["type"] == 'offre' OR $_GET["type"] == 'demande')) {
 			
 			$type_prestation = $_GET["type"];
+			if($_GET["cat_id"])
+				$cat_id = $_GET["cat_id"];
 
 			// préparation de la requête
 			$query = "SELECT pre_id, cat_id, cat_nom, pre_date_souhaitee_debut, pre_date_souhaitee_fin, pre_description, pre_souets
@@ -25,10 +27,18 @@
 				AND pre_date_realisation IS NULL
 			";
 
+			$parametres = array(
+				':type_prestation' => $type_prestation,
+			);
+
+			if(isset($cat_id)){
+				$query .= "AND pre_cat_id = :cat_id";
+				$parametres[':cat_id'] = $cat_id;
+			}
+
 			$stmt = $db->database->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-			$stmt->execute(array(
-				':type_prestation' => $type_prestation
-			));
+
+			$stmt->execute($parametres);
 			$db->close();
 			
 			
