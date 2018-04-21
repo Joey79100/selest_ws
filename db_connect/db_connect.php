@@ -43,6 +43,13 @@ class DB_CONNECT {
 		} catch (PDOException $e) {
 			$this->database = null;
 			// die('Erreur de connexion : ' . $e->getMessage() . '<br/>');
+
+			$response["success"] = 0;
+			$response["message"] = "Impossible de contacter la base de données";
+			$code = CODE_SERVICE_UNAVAILABLE;
+			
+			require_once __DIR__ . '/transaction/display_result.php';
+			exit();
 		}
 		
         // returing connection cursor
@@ -58,5 +65,7 @@ class DB_CONNECT {
     }
  
 }
- 
+
+$db = new DB_CONNECT();
+
 ?>

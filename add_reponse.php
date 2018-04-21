@@ -8,72 +8,63 @@
 	require_once __DIR__ . '/transaction/init_transaction.php';
 
 
-	// si la connexion à la base a fonctionné
-	if($db->database){
-		
-		// vérification de la présence des données
-		if (
-				isset($_POST["pre_id"])
-			AND isset($_POST["adh_id"])
-		) {
+	// stopper l'exécution du script si l'utilisateur n'est pas connecté
+	check_connection(RIGHTS_WRITER);
+	
 
-			// paramètres obligatoires
-			$pre_id = $_POST['pre_id'];
-			$adh_id = $_POST['adh_id'];
+	// vérification de la présence des données
+	if (
+			isset($_POST["pre_id"])
+	) {
 
-			// préparation de la requête
-			$query = "INSERT INTO rel_prestation_adherent (rpa_pre_id, rpa_adh_id)
-				VALUES (:pre_id, :adh_id)";
+		// paramètres obligatoires
+		$pre_id = $_POST['pre_id'];
+		$adh_id = $_SESSION['selest_ws']['uti_id'];
 
-			// préparation des paramètres
-			$parametres = array(
-				':pre_id' => $pre_id,
-				':adh_id' => $adh_id
-			);
+		// préparation de la requête
+		$query = "INSERT INTO rel_prestation_adherent (rpa_pre_id, rpa_adh_id)
+			VALUES (:pre_id, :adh_id)";
 
-			$stmt = $db->database->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+		// préparation des paramètres
+		$parametres = array(
+			':pre_id' => $pre_id,
+			':adh_id' => $adh_id
+		);
 
-			try{
+		$stmt = $db->database->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 
-				// lancement de la requête
-				$stmt->execute($parametres);
+		try{
 
-				// succès
-				$response["success"] = 1;
-				$code = CODE_CREATED_CONTENT;
+			// lancement de la requête
+			$stmt->execute($parametres);
 
-			} catch (PDOException $e) {
+			// succès
+			$response["success"] = 1;
+			$code = CODE_CREATED_NO_CONTENT;
 
-				$e->getCode();
-				$e->getMessage();
-				
-				// pas de donnée
-				$response["success"] = 0;
-				$response["error"] = $e->getCode();
-				$response["message"] = $e->getMessage();
-				$code = CODE_BAD_REQUEST;
+		} catch (PDOException $e) {
 
-			}
-
-			$db->close();
-			$stmt->closeCursor();
+			$e->getCode();
+			$e->getMessage();
 			
-
-		} else {
-
-			// requête invalide
+			// pas de donnée
 			$response["success"] = 0;
-			$response["message"] = "Requête invalide - champs manquants";
+			$response["error"] = $e->getCode();
+			$response["message"] = $e->getMessage();
 			$code = CODE_BAD_REQUEST;
 
 		}
 
-	} else {
+		$db->close();
+		$stmt->closeCursor();
 		
-		// pas de donnée
+
+	} else {
+
+		// requête invalide
 		$response["success"] = 0;
-		$response["message"] = "Impossible de contacter la base de données";
-		$code = CODE_SERVICE_UNAVAILABLE;
+		$response["message"] = "Requête invalide - champs manquants";
+		$code = CODE_BAD_REQUEST;
 
 	}
 

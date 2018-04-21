@@ -8,87 +8,78 @@
 	require_once __DIR__ . '/transaction/init_transaction.php';
 
 
-	// si la connexion à la base a fonctionné
-	if($db->database){
-		
-		// vérification de la présence des données
-		if (
-				isset($_POST["pre_adh_id"])
-			AND isset($_POST["pre_cat_id"])
-			AND isset($_POST["pre_ltp_id"])
-			AND isset($_POST["pre_description"])
-			AND isset($_POST["pre_souets"])
-		) {
+	// stopper l'exécution du script si l'utilisateur n'est pas connecté
+	check_connection(RIGHTS_WRITER);
+	
 
-			// paramètres obligatoires
-			$pre_adh_id_auteur = $_POST['pre_adh_id'];
-			$pre_cat_id = $_POST['pre_cat_id'];
-			$pre_ltp_id = $_POST['pre_ltp_id'];
-			$pre_description = $_POST['pre_description'];
-			$pre_souets = $_POST['pre_souets'];
+	// vérification de la présence des données
+	if (
+			isset($_POST["pre_cat_id"])
+		AND isset($_POST["pre_ltp_id"])
+		AND isset($_POST["pre_description"])
+		AND isset($_POST["pre_souets"])
+	) {
 
-			// paramètres optionnels
-			$pre_date_souhaitee_debut = $_POST['pre_date_souhaitee_debut'] ?? null;
-			$pre_date_souhaitee_fin = $_POST['pre_date_souhaitee_fin'] ?? null;
+		// paramètres obligatoires
+		$pre_adh_id_auteur = $_SESSION['selest_ws']['uti_id'];
+		$pre_cat_id = $_POST['pre_cat_id'];
+		$pre_ltp_id = $_POST['pre_ltp_id'];
+		$pre_description = $_POST['pre_description'];
+		$pre_souets = $_POST['pre_souets'];
 
-			// préparation de la requête
-			$query = "INSERT INTO prestation (pre_adh_id, pre_cat_id, pre_ltp_id, pre_date_souhaitee_debut, pre_date_souhaitee_fin, pre_description, pre_souets)
-				VALUES (:pre_adh_id, :pre_cat_id, :pre_ltp_id, :pre_date_souhaitee_debut, :pre_date_souhaitee_fin, :pre_description, :pre_souets)";
+		// paramètres optionnels
+		$pre_date_souhaitee_debut = $_POST['pre_date_souhaitee_debut'] ?? null;
+		$pre_date_souhaitee_fin = $_POST['pre_date_souhaitee_fin'] ?? null;
 
-			// préparation des paramètres
-			$parametres = array(
-				':pre_adh_id' => $pre_adh_id,
-				':pre_cat_id' => $pre_cat_id,
-				':pre_ltp_id' => $pre_ltp_id,
-				':pre_date_souhaitee_debut' => $pre_date_souhaitee_debut,
-				':pre_date_souhaitee_fin' => $pre_date_souhaitee_fin,
-				':pre_description' => $pre_description,
-				':pre_souets' => $pre_souets
-			);
+		// préparation de la requête
+		$query = "INSERT INTO prestation (pre_adh_id, pre_cat_id, pre_ltp_id, pre_date_souhaitee_debut, pre_date_souhaitee_fin, pre_description, pre_souets)
+			VALUES (:pre_adh_id, :pre_cat_id, :pre_ltp_id, :pre_date_souhaitee_debut, :pre_date_souhaitee_fin, :pre_description, :pre_souets)";
 
-			$stmt = $db->database->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+		// préparation des paramètres
+		$parametres = array(
+			':pre_adh_id' => $pre_adh_id,
+			':pre_cat_id' => $pre_cat_id,
+			':pre_ltp_id' => $pre_ltp_id,
+			':pre_date_souhaitee_debut' => $pre_date_souhaitee_debut,
+			':pre_date_souhaitee_fin' => $pre_date_souhaitee_fin,
+			':pre_description' => $pre_description,
+			':pre_souets' => $pre_souets
+		);
 
-			try{
+		$stmt = $db->database->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 
-				// lancement de la requête 
-				$stmt->execute($parametres);
+		try{
 
-				// récupération de l'id inséré
-				$response["id"] = $db->database->lastInsertId();
+			// lancement de la requête 
+			$stmt->execute($parametres);
 
-				// succès
-				$response["success"] = 1;
-				$code = CODE_CREATED_CONTENT;
+			// récupération de l'id inséré
+			$response["id"] = $db->database->lastInsertId();
 
-			} catch(PDOException $e) {
+			// succès
+			$response["success"] = 1;
+			$code = CODE_CREATED_CONTENT;
 
-				$response["success"] = 0;
-				$response["error"] = $e->getCode();
-				$response["message"] = $e->getMessage();
-				$code = CODE_INTERNAL_SERVER_ERROR;
+		} catch(PDOException $e) {
 
-			}
-
-
-			$db->close();
-			$stmt->closeCursor();
-			
-
-		} else {
-
-			// requête invalide
 			$response["success"] = 0;
-			$response["message"] = "Requête invalide - champs manquants";
-			$code = CODE_BAD_REQUEST;
+			$response["error"] = $e->getCode();
+			$response["message"] = $e->getMessage();
+			$code = CODE_INTERNAL_SERVER_ERROR;
 
 		}
 
-	} else {
+
+		$db->close();
+		$stmt->closeCursor();
 		
-		// pas de donnée
+
+	} else {
+
+		// requête invalide
 		$response["success"] = 0;
-		$response["message"] = "Impossible de contacter la base de données";
-		$code = CODE_SERVICE_UNAVAILABLE;
+		$response["message"] = "Requête invalide - champs manquants";
+		$code = CODE_BAD_REQUEST;
 
 	}
 

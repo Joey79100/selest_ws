@@ -1,9 +1,47 @@
-# Webservices Selest
+# Utilisation du Webservice Selest
 
 
 
 ## Généralités
+
+
 ### Envoi d'une requête
+
+
+
+
+#### Prérequis
+Avant d'envoyer des requêtes, il est nécessaire de s'authentifier avant.
+
+L'authentification permet de récupérer un `token` (chaîne de caractères aléatoire servant à "matérialiser" une connexion). Ce token doit être renvoyé dans l'en-tête de chaque requête. S'il n'est pas envoyé ou qu'il n'est pas valide, toutes les requêtes renverront un message signalant qu'une authentification est requise.
+
+L'authentification s'effectue en envoyant une requête vers la page `authentification.php`, en passant un identifiant et un mot de passe utilisateur valides (*voir la section **Requêtes de lecture** > **Authentification***). Si le paramètre `success == 1`, la connexion a réussi, le paramètre `token` est renvoyé. Ce `token` est valide jusqu'à ce qu'une nouvelle tentative d'authentification soit effectuée.
+
+
+
+
+
+#### Envoyer une requête
+Une requête doit être envoyée au webservice en précisant la route (fichier php correspondant).
+* Dans le **body**, envoyer les paramètres éventuels (`GET` ou `POST`).
+* Dans le **header**, envoyer le `token` matérialisant la connexion. Un token est récupéré après avoir effectué une authentification (voir la requête Authentification)
+
+
+#### Exemple :
+Envoi d'une requête permettant d'ajouter une nouvelle catégorie de prestations.
+
+```
+POST: http://localhost/selest_ws/add_categorie.php
+```
+Head :
+```
+token:1a63ecc32f837cefe62d33c98e23a6992082fad09fdfcc6d6e95ea686676dbb8
+```
+Body :
+```
+cat_nom:Chats
+```
+
 
 
 
@@ -14,6 +52,8 @@ Un code HTTP est renvoyé avec la réponse en fonction du résultat de la requê
 * `201` (`CODE_CREATED_CONTENT`) : l'élément a été créé, retourne le contenu
 * `204` (`CODE_CREATED_NO_CONTENT`) : l'élément a été créé, ne retourne rien
 * `400` (`CODE_BAD_REQUEST`) : la requête est incorrecte
+* `401` (`CODE_UNAUTHORIZED`) : utilisateur non authentifié
+* `403` (`CODE_FORBIDDEN`) : page non accessible pour cet utilisateur
 * `404` (`CODE_NOT_FOUND`) : requête correcte mais aucun contenu
 * `500` (`CODE_INTERNAL_SERVER_ERROR`) : requête correcte mais un problème est survenu
 * `501` (`CODE_NOT_IMPLEMENTED`) : requête correcte mais pas encore implémentée
@@ -27,11 +67,56 @@ Elle contient :
 
 
 
+#### Exemple de réponse pour une requête satisfaite
+Statut : ```200```
+
+Body :
+```
+{
+    "offres": [
+        {
+            "pre_id": 1,
+            "cat_id": 7,
+            "cat_nom": "Chats",
+            "pre_date_souhaitee_debut": null,
+            "pre_date_souhaitee_fin": null,
+            "pre_description": "Vente de chats empaillés",
+            "pre_souets": 0
+        },
+        {
+            "pre_id": 2,
+            "cat_id": 7,
+            "cat_nom": "Chats",
+            "pre_date_souhaitee_debut": "2018-09-01",
+            "pre_date_souhaitee_fin": null,
+            "pre_description": "Prêt de chats empilés",
+            "pre_souets": 200
+        }
+    ],
+    "success": 1
+}
+```
+
+#### Exemple de réponse pour une requête non satisfaite
 
 
 
 
 ## Requêtes de lecture
+
+
+### Authentification
+Renvoie un token matérialisant la connexion utilisateur au webservice. Ce token, à passer dans l'en-tête de la requête, est nécessaire pour pouvoir envoyer les requêtes suivantes.
+* Route : `authentification.php`
+* Méthode : `POST`
+* Paramètres :
+	* `identifiant` - Identifiant de l'utilisateur
+	* `mot_de_passe` - Mot de passe de l'utilisateur
+* Retourne :
+	* `token` (*si authentification réussie*) - le token à utiliser à chaque prochaine requête
+
+
+
 
 
 ### Récupérer les adhérents
@@ -91,8 +176,22 @@ Ajoute une nouvelle catégorie
 * Renvoie :
 	* `id` - l'ID de la catégorie ajoutée
 
+### Ajouter un utilisateur
+Crée un utilisateur. Un utilisateur correspond à un adhérent dans la plupart des cas, mais pas nécessairement.
+* Route : `add_utilisateur.php`
+* Méthode : `POST`
+* Paramètres :
+	* `uti_identifiant` - Identifiant de connexion
+	* `uti_mot_de_passe` - Mot de passe de connexion
+	* `uti_droits` - (*optionnel*) - Niveau de droits accordés à cet utilisateur. Ne prend que deux valeurs :
+		* `A` - Administrateur
+		* `W` (*par défaut*) - Utilisateur (writer)
+	* `uti_adh_id` - (*optionnel*) - ID de l'adhérent à associer à ce compte
+* Renvoie :
+	* `id` - l'ID de l'utilisateur ajouté
+
 ### Ajouter un adhérent
-Ajoute un nouvel adhérent
+Ajoute un nouvel adhérent. Créer un adhérent ne créée pas d'utilisateur : les utilisateurs ne peuvent être créés que par des administrateurs.
 * Route : `add_adherent.php`
 * Méthode : `POST`
 * Paramètres :
@@ -139,5 +238,7 @@ Ajoute une réponse à une offre
 * Paramètres :
 	* `adh_id` - ID de l'adhérent répondant à la prestation
 	* `pre_id` - ID de la prestation
+
+
 
 
