@@ -37,7 +37,7 @@
 
 		// préparation des paramètres
 		$parametres = array(
-			':pre_adh_id' => $pre_adh_id,
+			':pre_adh_id' => $pre_adh_id_auteur,
 			':pre_cat_id' => $pre_cat_id,
 			':pre_ltp_id' => $pre_ltp_id,
 			':pre_date_souhaitee_debut' => $pre_date_souhaitee_debut,

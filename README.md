@@ -67,11 +67,11 @@ Elle contient :
 
 
 
-#### Exemple de réponse pour une requête satisfaite
-Statut : ```200```
+#### Exemples de réponse pour des requêtes satisfaites
 
-Body :
+Récupération des offres :
 ```
+// Statut : 200
 {
     "offres": [
         {
@@ -93,6 +93,15 @@ Body :
             "pre_souets": 200
         }
     ],
+    "success": 1
+}
+```
+
+Ajout d'une prestation :
+```
+// Statut : 201
+{
+    "id": "3",
     "success": 1
 }
 ```
