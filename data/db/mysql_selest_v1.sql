@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `adherent` (
   `adh_ville` varchar(50) DEFAULT NULL,
   `adh_souets` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`adh_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- Les données exportées n'étaient pas sélectionnées.
 -- Export de la structure de la table selest. categorie
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `categorie` (
   `cat_id` int(11) NOT NULL AUTO_INCREMENT,
   `cat_nom` varchar(50) NOT NULL,
   PRIMARY KEY (`cat_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- Les données exportées n'étaient pas sélectionnées.
 -- Export de la structure de la table selest. liste_type_prestation
@@ -60,14 +60,21 @@ CREATE TABLE IF NOT EXISTS `message` (
   KEY `mes_adh_id_emetteur_mes_adh_id_destinataire` (`mes_adh_id_emetteur`,`mes_adh_id_destinataire`),
   CONSTRAINT `fk_mes_adh_id_destinataire` FOREIGN KEY (`mes_adh_id_destinataire`) REFERENCES `adherent` (`adh_id`),
   CONSTRAINT `fk_mes_adh_id_emetteur` FOREIGN KEY (`mes_adh_id_emetteur`) REFERENCES `adherent` (`adh_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+
+-- Les données exportées n'étaient pas sélectionnées.
+-- Export de la structure de la table selest. parametres
+CREATE TABLE IF NOT EXISTS `parametres` (
+  `par_nom` varchar(32) NOT NULL,
+  `par_valeur` varchar(256) NOT NULL,
+  PRIMARY KEY (`par_nom`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 -- Les données exportées n'étaient pas sélectionnées.
 -- Export de la structure de la table selest. prestation
 CREATE TABLE IF NOT EXISTS `prestation` (
   `pre_id` int(11) NOT NULL AUTO_INCREMENT,
-  `pre_adh_id_auteur` int(11) NOT NULL,
-  `pre_adh_id_realisateur` int(11) DEFAULT NULL,
+  `pre_adh_id` int(11) NOT NULL,
   `pre_cat_id` int(11) NOT NULL,
   `pre_ltp_id` int(11) NOT NULL,
   `pre_date_souhaitee_debut` date DEFAULT NULL,
@@ -77,14 +84,12 @@ CREATE TABLE IF NOT EXISTS `prestation` (
   `pre_souets` int(11) NOT NULL,
   PRIMARY KEY (`pre_id`),
   KEY `fk_pre_ltp_id` (`pre_ltp_id`),
-  KEY `fk_pre_adh_id_auteur` (`pre_adh_id_auteur`),
-  KEY `fk_pre_adh_id_realisateur` (`pre_adh_id_realisateur`),
   KEY `pre_cat_id` (`pre_cat_id`),
-  CONSTRAINT `fk_pre_adh_id_auteur` FOREIGN KEY (`pre_adh_id_auteur`) REFERENCES `adherent` (`adh_id`),
-  CONSTRAINT `fk_pre_adh_id_realisateur` FOREIGN KEY (`pre_adh_id_realisateur`) REFERENCES `adherent` (`adh_id`),
+  KEY `fk_pre_adh_id` (`pre_adh_id`),
+  CONSTRAINT `fk_pre_adh_id` FOREIGN KEY (`pre_adh_id`) REFERENCES `adherent` (`adh_id`),
   CONSTRAINT `fk_pre_cat_id` FOREIGN KEY (`pre_cat_id`) REFERENCES `categorie` (`cat_id`),
   CONSTRAINT `fk_pre_ltp_id` FOREIGN KEY (`pre_ltp_id`) REFERENCES `liste_type_prestation` (`ltp_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- Les données exportées n'étaient pas sélectionnées.
 -- Export de la structure de la table selest. rel_prestation_adherent
@@ -95,7 +100,20 @@ CREATE TABLE IF NOT EXISTS `rel_prestation_adherent` (
   KEY `fk_rpa_adh_id` (`rpa_adh_id`),
   CONSTRAINT `fk_rpa_adh_id` FOREIGN KEY (`rpa_adh_id`) REFERENCES `adherent` (`adh_id`),
   CONSTRAINT `fk_rpa_pre_id` FOREIGN KEY (`rpa_pre_id`) REFERENCES `prestation` (`pre_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Cette table associe des adhérents à des prestations : chaque association correspond à une réponse à une prestation (l''auteur de la prestation est enregistré directement dans la table Prestation)';
+
+-- Les données exportées n'étaient pas sélectionnées.
+-- Export de la structure de la table selest. utilisateur
+CREATE TABLE IF NOT EXISTS `utilisateur` (
+  `uti_id` int(11) NOT NULL AUTO_INCREMENT,
+  `uti_identifiant` varchar(64) NOT NULL,
+  `uti_mot_de_passe` varchar(256) NOT NULL,
+  `uti_droits` enum('A','W') NOT NULL DEFAULT 'W' COMMENT 'Autorisations de l''utilisateur : A = administrateur, W =utilisateur lambda (writer)',
+  `uti_adh_id` int(11) DEFAULT NULL COMMENT 'Un utilisateur est généralement un adhérent, mais pas nécessairement',
+  PRIMARY KEY (`uti_id`),
+  KEY `fk_uti_adh_id` (`uti_adh_id`),
+  CONSTRAINT `fk_uti_adh_id` FOREIGN KEY (`uti_adh_id`) REFERENCES `adherent` (`adh_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
 
 -- Les données exportées n'étaient pas sélectionnées.
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
