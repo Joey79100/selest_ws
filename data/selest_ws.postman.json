@@ -10,7 +10,12 @@
 			"name": "Récupérer les catégories",
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "token",
+						"value": "cab91d5034b1fea7307dbd2ae795e21b1356755372693407adff1b87bc6de7d995c647fe5078650c39c36a60920ed5ebfa1bf2f50534210b4c7abdbda3f6e1be"
+					}
+				],
 				"body": {
 					"mode": "raw",
 					"raw": ""
@@ -31,7 +36,7 @@
 			"response": []
 		},
 		{
-			"name": "Récupérer conversation",
+			"name": "Récupérer les demandes",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -57,7 +62,7 @@
 						}
 					]
 				},
-				"description": "Retourne toutes les offres"
+				"description": "Retourne toutes les demandes"
 			},
 			"response": []
 		},
@@ -65,13 +70,18 @@
 			"name": "Récupérer les offres",
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "token",
+						"value": "5a4147339aea1dab240546d3f4f774d4420603e7f6e58058e6027f697364160d"
+					}
+				],
 				"body": {
 					"mode": "raw",
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost/selest_ws/get_prestations_categorie.php?type=demande",
+					"raw": "http://localhost/selest_ws/get_prestations_categorie.php?type=offres",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -83,7 +93,7 @@
 					"query": [
 						{
 							"key": "type",
-							"value": "demande",
+							"value": "offres",
 							"equals": true
 						}
 					]
@@ -96,7 +106,12 @@
 			"name": "Récupérer adhérent",
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "token",
+						"value": "4721b8a4ef86609d62274e71a861e50f66ebc4a12f6be4a41f0d6eac817e507"
+					}
+				],
 				"body": {
 					"mode": "raw",
 					"raw": ""
@@ -163,19 +178,24 @@
 			"name": "Ajouter adhérent",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "token",
+						"value": "80aee8ffa2ef23bf1ec5342db63636bef87fbed23a24c09899f7351d043d13b67d3fb96584d93ad09afc8baebd8d1b170ed4e626e7769623d9b882518c9b03b8"
+					}
+				],
 				"body": {
 					"mode": "formdata",
 					"formdata": [
 						{
 							"key": "adh_nom",
-							"value": "Haliday",
+							"value": "Holiday",
 							"description": "",
 							"type": "text"
 						},
 						{
 							"key": "adh_prenom",
-							"value": "Johnny",
+							"value": "John",
 							"description": "",
 							"type": "text"
 						},
@@ -193,13 +213,13 @@
 						},
 						{
 							"key": "adh_email",
-							"value": "jean.michel@wanttodo.fr",
+							"value": "jean.mich@wanttodo.fr",
 							"description": "",
 							"type": "text"
 						},
 						{
 							"key": "adh_adresse",
-							"value": "1 route du feu allumé",
+							"value": "1 route du feu rouge",
 							"description": "",
 							"type": "text"
 						},
@@ -211,7 +231,7 @@
 						},
 						{
 							"key": "adh_ville",
-							"value": "En cendre",
+							"value": "En poudre",
 							"description": "",
 							"type": "text"
 						}
@@ -236,7 +256,12 @@
 			"name": "Ajouter catégorie",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "token",
+						"value": "c380442cb1761109e86c35060cb44880a0b7dcf4cbcfa9e3f42c01dbf795b1ecc0d3f9386dcbc3a9a3cd38519cb1b0d2c7b9f2b84e5f722cdddcd0e03c7aec52"
+					}
+				],
 				"body": {
 					"mode": "formdata",
 					"formdata": [
@@ -265,18 +290,29 @@
 		},
 		{
 			"name": "Ajouter offre sans date",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "48fb4079-bc7d-4dc6-b979-4dcc9a81135f",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "token",
+						"value": "1ca6fef085d6f7e6f5988e650978e13dc62e637838e2218eff7962d232121318"
+					}
+				],
 				"body": {
 					"mode": "formdata",
 					"formdata": [
-						{
-							"key": "pre_adh_id",
-							"value": "1",
-							"description": "",
-							"type": "text"
-						},
 						{
 							"key": "pre_cat_id",
 							"value": "7",
@@ -478,6 +514,80 @@
 					]
 				},
 				"description": "Retourne toutes les demandes"
+			},
+			"response": []
+		},
+		{
+			"name": "S'authentifier (adhérent)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "identifiant",
+							"value": "plop",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "mot_de_passe",
+							"value": "azerty",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/selest_ws/authentification.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"selest_ws",
+						"authentification.php"
+					]
+				},
+				"description": "Tente une connexion utilisateur (adhérent, droits normaux) à la base de données, et si elle a fonctionné, renvoie un token à utiliser pour chaque requête"
+			},
+			"response": []
+		},
+		{
+			"name": "S'authentifier (administrateur)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "identifiant",
+							"value": "master",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "mot_de_passe",
+							"value": "system",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/selest_ws/authentification.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"selest_ws",
+						"authentification.php"
+					]
+				},
+				"description": "Tente une connexion utilisateur (adhérent, droits normaux) à la base de données, et si elle a fonctionné, renvoie un token à utiliser pour chaque requête"
 			},
 			"response": []
 		}

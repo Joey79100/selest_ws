@@ -97,9 +97,42 @@ Body :
 }
 ```
 
-#### Exemple de réponse pour une requête non satisfaite
+#### Exemples de réponse pour des requêtes non satisfaites
+Tentative de requête avec paramètres manquants ou invalides :
+```
+// Statut : 400
+{
+    "success": 0,
+    "message": "Requête invalide - champs manquants ou invalides"
+}
+```
 
+Tentative de récupération d'un élément sans avoir passé de token valide :
+```
+// Statut : 401
+{
+    "success": 0,
+    "message": "Une authentification est requise pour accéder à cette page"
+}
+```
 
+Tentative de requête sur une page en étant authentifié mais en n'ayant pas les droits requis (par exemple si on essaie d'ajouter un adhérent sans être administrateur) :
+```
+// Statut : 403
+{
+    "success": 0,
+    "message": "L'utilisateur n'a pas les droits nécessaires pour accéder à cette page"
+}
+```
+
+Tentative de récupération d'un élément non-existant dans la base :
+```
+// Statut : 404
+{
+    "success": 0,
+    "message": "Aucun résultat"
+}
+```
 
 
 ## Requêtes de lecture
