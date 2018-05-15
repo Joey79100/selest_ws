@@ -13,7 +13,7 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "cab91d5034b1fea7307dbd2ae795e21b1356755372693407adff1b87bc6de7d995c647fe5078650c39c36a60920ed5ebfa1bf2f50534210b4c7abdbda3f6e1be"
+						"value": "d247999470dd08c1972b2bd35fc11b4adfaa8cd3238a96a7ce86cc81be2bad75"
 					}
 				],
 				"body": {
@@ -109,7 +109,7 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "4721b8a4ef86609d62274e71a861e50f66ebc4a12f6be4a41f0d6eac817e507"
+						"value": "d247999470dd08c1972b2bd35fc11b4adfaa8cd3238a96a7ce86cc81be2bad75"
 					}
 				],
 				"body": {
@@ -139,16 +139,71 @@
 			"response": []
 		},
 		{
-			"name": "Récupérer conversation",
+			"name": "Récupérer conversation (utilisateur)",
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "token",
+						"value": "08fd2bd1730c86e5b59b62be463d6235eae0ee8f13fe2a116aaee8a0af6d3902"
+					}
+				],
 				"body": {
 					"mode": "raw",
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost/selest_ws/get_conversation.php?id_emetteur=3&id_destinataire=2",
+					"raw": "http://localhost/selest_ws/get_conversation.php?id_destinataire=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"selest_ws",
+						"get_conversation.php"
+					],
+					"query": [
+						{
+							"key": "id_destinataire",
+							"value": "2",
+							"equals": true
+						},
+						{
+							"key": "id_message",
+							"value": "2",
+							"equals": true,
+							"description": "Dernier message déjà récupéré par l'application",
+							"disabled": true
+						},
+						{
+							"key": "nb_messages",
+							"value": "5",
+							"equals": true,
+							"description": "Nombre de messages à renvoyer",
+							"disabled": true
+						}
+					]
+				},
+				"description": "Récupère les messages d'une conversation entre l'utilisateur connecté et l'utilisateur dont l'ID est passé en paramètre"
+			},
+			"response": []
+		},
+		{
+			"name": "Récupérer conversation (administrateur)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "1836980b50a8e40366295e824eb112f9567b8cc20927af4f1009d2b2f0da1f82"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost/selest_ws/get_conversation.php?id_destinataire=2",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -161,16 +216,32 @@
 						{
 							"key": "id_emetteur",
 							"value": "3",
-							"equals": true
+							"equals": true,
+							"description": "Second ID d'utilisateur, utilisable uniquement par les admins pour voir des conversations des adhérents",
+							"disabled": true
 						},
 						{
 							"key": "id_destinataire",
 							"value": "2",
 							"equals": true
+						},
+						{
+							"key": "id_message",
+							"value": "15",
+							"equals": true,
+							"description": "Dernier message déjà récupéré par l'application",
+							"disabled": true
+						},
+						{
+							"key": "nb_messages",
+							"value": "3",
+							"equals": true,
+							"description": "Nombre de messages à renvoyer",
+							"disabled": true
 						}
 					]
 				},
-				"description": "Retourne toutes les offres"
+				"description": "Récupère les messages d'une conversation entre deux utilisateurs dont les IDs sont passés en paramètre"
 			},
 			"response": []
 		},
@@ -307,7 +378,7 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "1ca6fef085d6f7e6f5988e650978e13dc62e637838e2218eff7962d232121318"
+						"value": "54a5feece14aa2acd040191e4302ddddc7e26396a7431bcb7dc0d16e8d7ae0e8"
 					}
 				],
 				"body": {
@@ -379,25 +450,24 @@
 			"name": "Ajouter message",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "token",
+						"value": "43aec69e7265848cba87802c172f6c6dbabf729dd4bb24bdfac56dba6172b436"
+					}
+				],
 				"body": {
 					"mode": "formdata",
 					"formdata": [
 						{
-							"key": "mes_adh_id_emetteur",
-							"value": "3",
+							"key": "id_destinataire",
+							"value": "1",
 							"description": "",
 							"type": "text"
 						},
 						{
-							"key": "mes_adh_id_destinataire",
-							"value": "2",
-							"description": "",
-							"type": "text"
-						},
-						{
-							"key": "mes_texte",
-							"value": "Bonjour ma meilleure amie",
+							"key": "texte",
+							"value": "La révolution a eu lieu, cher Plop. Signé Master.",
 							"description": "",
 							"type": "text"
 						}
@@ -527,13 +597,13 @@
 					"formdata": [
 						{
 							"key": "identifiant",
-							"value": "plop",
+							"value": "master",
 							"description": "",
 							"type": "text"
 						},
 						{
 							"key": "mot_de_passe",
-							"value": "azerty",
+							"value": "system",
 							"description": "",
 							"type": "text"
 						}
@@ -588,6 +658,68 @@
 					]
 				},
 				"description": "Tente une connexion utilisateur (adhérent, droits normaux) à la base de données, et si elle a fonctionné, renvoie un token à utiliser pour chaque requête"
+			},
+			"response": []
+		},
+		{
+			"name": "Récupérer liste conversations",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "43aec69e7265848cba87802c172f6c6dbabf729dd4bb24bdfac56dba6172b436"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost/selest_ws/get_conversations.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"selest_ws",
+						"get_conversations.php"
+					]
+				},
+				"description": "Récupère la liste des conversations d'un utilisateur, ainsi que le contenu du dernier message dans chaque conversation, et le nombre de messages non lus pour chaque conversation."
+			},
+			"response": []
+		},
+		{
+			"name": "Marquer conversation comme lue",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "43aec69e7265848cba87802c172f6c6dbabf729dd4bb24bdfac56dba6172b436"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id_conversation",
+							"value": "2",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/selest_ws/set_conversation_lue.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"selest_ws",
+						"set_conversation_lue.php"
+					]
+				},
+				"description": "Marque tous les messages d'une conversation comme lus"
 			},
 			"response": []
 		}

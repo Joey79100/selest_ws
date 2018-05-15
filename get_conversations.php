@@ -34,6 +34,7 @@
 			SELECT COUNT(mes_id)
 			FROM message
 			WHERE mes_con_id = con_id
+			AND mes_uti_id_emetteur != :id_emetteur_2
 			AND mes_lu = 0
 		) AS nb_messages_non_lus
 		FROM conversation
@@ -42,7 +43,8 @@
 
 	$stmt = $db->database->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 	$stmt->execute(array(
-		':id_emetteur' => $id_emetteur
+		':id_emetteur' => $id_emetteur,
+		':id_emetteur_2' => $id_emetteur
 	));
 	$db->close();
 	
@@ -52,7 +54,7 @@
 	if($stmt->rowCount() > 0){
 
 		// récupération des résultats
-		$response["messages"] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		$response["conversations"] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		
 		// succès
 		$response["success"] = 1;

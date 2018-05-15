@@ -45,6 +45,17 @@ cat_nom:Chats
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 ### Réponse à une requête
 Un code HTTP est renvoyé avec la réponse en fonction du résultat de la requête.
 
@@ -144,6 +155,31 @@ Tentative de récupération d'un élément non-existant dans la base :
 ```
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Requêtes de lecture
 
 
@@ -156,6 +192,8 @@ Renvoie un token matérialisant la connexion utilisateur au webservice. Ce token
 	* `mot_de_passe` - Mot de passe de l'utilisateur
 * Retourne :
 	* `token` (*si authentification réussie*) - le token à utiliser à chaque prochaine requête
+
+
 
 
 
@@ -183,6 +221,9 @@ Récupère l'ensemble des adhérents avec leurs informations basiques (nom prén
 * Méthode : `GET`
 
 
+
+
+
 ### Récupérer toutes les catégories
 Récupère l'intégralité des catégories.
 * Route : `get_categories.php` 
@@ -198,8 +239,29 @@ Récupère les offres et les demandes actives, éventuellement d'une catégorie 
 	* `cat_id` (*optionnel*) - ID de la catégorie (pour ne chercher les prestations que d'une catégorie)
 
 
+
+
+
+### Récupérer toutes les conversations d'un utilisateur
+Récupère la liste des conversations d'un utilisateur.
+
+Renvoie également pour chaque conversation le contenu du dernier message et le nombre de messages non lus.
+
+Les administrateurs peuvent passer un paramètre id_emetteur pour pouvoir voir les conversations d'un utilisateur autre que lui-même.
+
+* Route : `get_conversation.php` 
+* Méthode : `GET`
+* Paramètres :
+	* `id_emetteur` (*optionnel* - *admin seulement*) - ID d'un utilisateur émetteur 
+
+
 ### Récupérer une conversation entre deux utilisateurs
 Récupère les messages entre deux utilisateurs.
+
+Les messages sont triés par ordre décroissant (le plus récent en premier).
+
+Seulement 10 messages sont chargés par défaut. Pour avoir la suite des messages, renvoyer une requête en envoyant l'ID du message le plus ancien ayant déjà été récupéré.
+
 * Route : `get_conversation.php` 
 * Méthode : `GET`
 * Paramètres :
@@ -207,6 +269,47 @@ Récupère les messages entre deux utilisateurs.
 	* `id_destinataire` - ID d'un utilisateur destinataire
 	* `id_message` (*optionnel*) - ID du message le plus ancien ayant déjà été récupéré
 	* `nb_messages` (*optionnel*) - Nombre de messages à charger (10 par défaut)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ## Requêtes d'écriture
@@ -250,15 +353,7 @@ Ajoute un nouvel adhérent. Créer un adhérent ne créée pas d'utilisateur : l
 * Renvoie :
 	* `id` - l'ID de l'adhérent ajouté
 
-### Aouter un message
-Ajoute un nouveau message dans une conversation entre deux utilisateurs
-* Route : `add_message.php`
-* Méthode : `POST`
-* Paramètres :
-	* `mes_id_destinataire` - ID de l'utilisateur destinataire
-	* `mes_texte` - Contenu du message
-* Renvoie :
-	* `id` - l'ID du message ajouté
+
 
 ### Ajouter une offre ou une demande
 Ajoute une prestation
@@ -285,3 +380,22 @@ Ajoute une réponse à une offre
 
 
 
+
+
+### Ajouter un message
+Ajoute un nouveau message dans une conversation entre deux utilisateurs
+* Route : `add_message.php`
+* Méthode : `POST`
+* Paramètres :
+	* `mes_id_destinataire` - ID de l'utilisateur destinataire
+	* `mes_texte` - Contenu du message
+* Renvoie :
+	* `id` - l'ID du message ajouté
+
+
+### Marquer une conversation comme lue
+Marque tous les messages d'une conversation comme lue pour l'utilisateur lisant les messages.
+* Route : `add_message.php`
+* Méthode : `POST`
+* Paramètres :
+	* `id_conversation` - ID de la conversation à marquer comme lue
