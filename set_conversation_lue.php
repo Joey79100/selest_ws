@@ -18,12 +18,14 @@
 	) {
 
 		// paramètres obligatoires
+		$uti_id = $_SESSION['selest_ws']['uti_id'];
 		$con_id = $_POST["id_conversation"];
 
 		// préparation de la requête
 		$query = "UPDATE message SET
 			mes_lu = 1
-			WHERE mes_con_id = :con_id";
+			WHERE mes_con_id = :con_id
+			AND mes_uti_id_emetteur != :uti_id";
 
 		$stmt = $db->database->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 
@@ -31,7 +33,8 @@
 
 			// lancement de la requête 
 			$stmt->execute(array(
-				':con_id' => $con_id
+				':con_id' => $con_id,
+				':uti_id' => $uti_id
 			));
 
 			// succès
