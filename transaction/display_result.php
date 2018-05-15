@@ -10,4 +10,6 @@
 	header("HTTP/1.1 ".$code." "."");
 	header("Content-Type:application/json");
 
+	exit();
+
 ?>

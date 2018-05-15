@@ -40,6 +40,19 @@ CREATE TABLE IF NOT EXISTS `categorie` (
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- Les données exportées n'étaient pas sélectionnées.
+-- Export de la structure de la table selest. conversation
+CREATE TABLE IF NOT EXISTS `conversation` (
+  `con_id` int(11) NOT NULL AUTO_INCREMENT,
+  `con_uti_id_1` int(11) NOT NULL,
+  `con_uti_id_2` int(11) NOT NULL,
+  PRIMARY KEY (`con_id`),
+  KEY `fk_con_uti_id_1` (`con_uti_id_1`),
+  KEY `fk_con_uti_id_2` (`con_uti_id_2`),
+  CONSTRAINT `fk_con_uti_id_1` FOREIGN KEY (`con_uti_id_1`) REFERENCES `utilisateur` (`uti_id`),
+  CONSTRAINT `fk_con_uti_id_2` FOREIGN KEY (`con_uti_id_2`) REFERENCES `utilisateur` (`uti_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+
+-- Les données exportées n'étaient pas sélectionnées.
 -- Export de la structure de la table selest. liste_type_prestation
 CREATE TABLE IF NOT EXISTS `liste_type_prestation` (
   `ltp_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -51,16 +64,17 @@ CREATE TABLE IF NOT EXISTS `liste_type_prestation` (
 -- Export de la structure de la table selest. message
 CREATE TABLE IF NOT EXISTS `message` (
   `mes_id` int(11) NOT NULL AUTO_INCREMENT,
-  `mes_adh_id_emetteur` int(11) NOT NULL,
-  `mes_adh_id_destinataire` int(11) NOT NULL,
+  `mes_con_id` int(11) NOT NULL,
+  `mes_uti_id_emetteur` int(11) NOT NULL,
   `mes_texte` varchar(512) NOT NULL,
   `mes_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `mes_lu` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`mes_id`),
-  KEY `fk_mes_adh_id_destinataire` (`mes_adh_id_destinataire`),
-  KEY `mes_adh_id_emetteur_mes_adh_id_destinataire` (`mes_adh_id_emetteur`,`mes_adh_id_destinataire`),
-  CONSTRAINT `fk_mes_adh_id_destinataire` FOREIGN KEY (`mes_adh_id_destinataire`) REFERENCES `adherent` (`adh_id`),
-  CONSTRAINT `fk_mes_adh_id_emetteur` FOREIGN KEY (`mes_adh_id_emetteur`) REFERENCES `adherent` (`adh_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+  KEY `fk_mes_con_id` (`mes_con_id`),
+  KEY `fk_mes_uti_id_emetteur` (`mes_uti_id_emetteur`),
+  CONSTRAINT `fk_mes_con_id` FOREIGN KEY (`mes_con_id`) REFERENCES `conversation` (`con_id`),
+  CONSTRAINT `fk_mes_uti_id_emetteur` FOREIGN KEY (`mes_uti_id_emetteur`) REFERENCES `utilisateur` (`uti_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 -- Les données exportées n'étaient pas sélectionnées.
 -- Export de la structure de la table selest. parametres

@@ -12,7 +12,6 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
 -- Export de données de la table selest.adherent : ~8 rows (environ)
-DELETE FROM `adherent`;
 /*!40000 ALTER TABLE `adherent` DISABLE KEYS */;
 INSERT INTO `adherent` (`adh_id`, `adh_nom`, `adh_prenom`, `adh_telephone`, `adh_mobile`, `adh_email`, `adh_adresse`, `adh_code_postal`, `adh_ville`, `adh_souets`) VALUES
 	(1, 'Chirac', 'Patrick', '0201020304', '0601020304', 'patrick@chirac.fr', '1 là-bas', '12345', 'Très loin', 300),
@@ -26,7 +25,6 @@ INSERT INTO `adherent` (`adh_id`, `adh_nom`, `adh_prenom`, `adh_telephone`, `adh
 /*!40000 ALTER TABLE `adherent` ENABLE KEYS */;
 
 -- Export de données de la table selest.categorie : ~7 rows (environ)
-DELETE FROM `categorie`;
 /*!40000 ALTER TABLE `categorie` DISABLE KEYS */;
 INSERT INTO `categorie` (`cat_id`, `cat_nom`) VALUES
 	(1, 'Garde d\'enfants'),
@@ -39,43 +37,53 @@ INSERT INTO `categorie` (`cat_id`, `cat_nom`) VALUES
 	(8, 'Chats');
 /*!40000 ALTER TABLE `categorie` ENABLE KEYS */;
 
+-- Export de données de la table selest.conversation : ~2 rows (environ)
+/*!40000 ALTER TABLE `conversation` DISABLE KEYS */;
+INSERT INTO `conversation` (`con_id`, `con_uti_id_1`, `con_uti_id_2`) VALUES
+	(1, 2, 3),
+	(2, 3, 4),
+	(3, 2, 1);
+/*!40000 ALTER TABLE `conversation` ENABLE KEYS */;
+
 -- Export de données de la table selest.liste_type_prestation : ~2 rows (environ)
-DELETE FROM `liste_type_prestation`;
 /*!40000 ALTER TABLE `liste_type_prestation` DISABLE KEYS */;
 INSERT INTO `liste_type_prestation` (`ltp_id`, `ltp_nom`) VALUES
 	(1, 'offre'),
 	(2, 'demande');
 /*!40000 ALTER TABLE `liste_type_prestation` ENABLE KEYS */;
 
--- Export de données de la table selest.message : ~11 rows (environ)
-DELETE FROM `message`;
+-- Export de données de la table selest.message : ~17 rows (environ)
 /*!40000 ALTER TABLE `message` DISABLE KEYS */;
-INSERT INTO `message` (`mes_id`, `mes_adh_id_emetteur`, `mes_adh_id_destinataire`, `mes_texte`, `mes_date`) VALUES
-	(1, 2, 3, 'Bonjour je voudrais parler à Becky', '2018-03-09 16:39:15'),
-	(2, 2, 3, 'Mais je n\'arrive pas à la joindre', '2018-03-09 16:39:41'),
-	(3, 3, 2, 'Odieuse créature vous avez kidnappé le petit Doug-doug', '2018-03-09 16:40:09'),
-	(4, 2, 2, 'Bon, hé bien, je suppose que ma meilleure amie est dans sa période sensible du mois...', '2018-03-09 16:40:46'),
-	(5, 2, 3, 'Aucune nouvelle de Becky ? La dame au bout du téléphone semble ne pas m\'écouter', '2018-03-09 16:41:46'),
-	(6, 3, 2, 'Mais il fallait le dire plus tôt ! Rencontrons-nous chez Lewis afin de palier à ce problème.', '2018-03-09 16:43:46'),
-	(7, 2, 3, 'Becky sera-t-elle présente ?', '2018-03-09 16:44:03'),
-	(8, 3, 2, 'Non mais...', '2018-03-09 16:44:14'),
-	(9, 2, 3, 'Alors je refuse, Criquette vous avez essayé de me duper !', '2018-03-09 16:44:40'),
-	(10, 4, 3, 'Yiiihi', '2018-03-09 16:46:16'),
-	(11, 3, 4, '?', '2018-03-09 16:46:25'),
-	(12, 4, 3, 'Auu!', '2018-03-09 16:46:47'),
-	(13, 3, 4, 'J\'entends un épiléptique de l\'au-delà...', '2018-03-09 16:46:58'),
-	(14, 3, 2, 'Bonjour ma meilleure amie', '2018-04-11 16:58:35');
+INSERT INTO `message` (`mes_id`, `mes_con_id`, `mes_uti_id_emetteur`, `mes_texte`, `mes_date`, `mes_lu`) VALUES
+	(1, 1, 2, 'Bonjour je voudrais parler à Becky', '2018-03-09 16:39:15', 1),
+	(2, 1, 2, 'Mais je n\'arrive pas à la joindre', '2018-03-09 16:39:41', 1),
+	(3, 1, 3, 'Odieuse créature vous avez kidnappé le petit Doug-doug', '2018-03-09 16:40:09', 0),
+	(4, 1, 2, 'Bon, hé bien, je suppose que ma meilleure amie est dans sa période sensible du mois...', '2018-03-09 16:40:46', 1),
+	(5, 1, 2, 'Aucune nouvelle de Becky ? La dame au bout du téléphone semble ne pas m\'écouter', '2018-03-09 16:41:46', 1),
+	(6, 1, 3, 'Mais il fallait le dire plus tôt ! Rencontrons-nous chez Lewis afin de palier à ce problème.', '2018-03-09 16:43:46', 1),
+	(7, 1, 2, 'Becky sera-t-elle présente ?', '2018-03-09 16:44:03', 1),
+	(8, 1, 3, 'Non mais...', '2018-03-09 16:44:14', 0),
+	(9, 1, 2, 'Alors je refuse, Criquette vous avez essayé de me duper !', '2018-03-09 16:44:40', 1),
+	(10, 2, 4, 'Yiiihi', '2018-03-09 16:46:16', 1),
+	(11, 2, 3, '?', '2018-03-09 16:46:25', 1),
+	(12, 2, 4, 'Auu!', '2018-03-09 16:46:47', 1),
+	(13, 2, 3, 'J\'entends un épiléptique de l\'au-delà...', '2018-03-09 16:46:58', 1),
+	(14, 2, 3, 'Bonjour ma meilleure amie', '2018-04-11 16:58:35', 1),
+	(15, 1, 2, 'Bonjour ma meilleure amie', '2018-05-14 16:25:47', 1),
+	(16, 1, 2, 'Bonjour ma meilleure amie', '2018-05-14 16:44:20', 1),
+	(17, 1, 2, 'Bonjour ma meilleure amie', '2018-05-14 16:44:48', 1),
+	(18, 1, 2, 'La révolution a eu lieu, cher Plop. Signé Master.', '2018-05-15 15:15:52', 0),
+	(19, 1, 2, 'La révolution a eu lieu, cher Plop. Signé Master.', '2018-05-15 15:15:57', 0),
+	(20, 3, 2, 'La révolution a eu lieu, cher Plop. Signé Master.', '2018-05-15 15:21:28', 0);
 /*!40000 ALTER TABLE `message` ENABLE KEYS */;
 
 -- Export de données de la table selest.parametres : 1 rows
-DELETE FROM `parametres`;
 /*!40000 ALTER TABLE `parametres` DISABLE KEYS */;
 INSERT INTO `parametres` (`par_nom`, `par_valeur`) VALUES
 	('nombre_initial_souets', '900');
 /*!40000 ALTER TABLE `parametres` ENABLE KEYS */;
 
 -- Export de données de la table selest.prestation : ~3 rows (environ)
-DELETE FROM `prestation`;
 /*!40000 ALTER TABLE `prestation` DISABLE KEYS */;
 INSERT INTO `prestation` (`pre_id`, `pre_adh_id`, `pre_cat_id`, `pre_ltp_id`, `pre_date_souhaitee_debut`, `pre_date_souhaitee_fin`, `pre_date_realisation`, `pre_description`, `pre_souets`) VALUES
 	(1, 1, 7, 1, NULL, NULL, NULL, 'Vente de chats empaillés', 0),
@@ -84,14 +92,12 @@ INSERT INTO `prestation` (`pre_id`, `pre_adh_id`, `pre_cat_id`, `pre_ltp_id`, `p
 /*!40000 ALTER TABLE `prestation` ENABLE KEYS */;
 
 -- Export de données de la table selest.rel_prestation_adherent : ~0 rows (environ)
-DELETE FROM `rel_prestation_adherent`;
 /*!40000 ALTER TABLE `rel_prestation_adherent` DISABLE KEYS */;
 INSERT INTO `rel_prestation_adherent` (`rpa_pre_id`, `rpa_adh_id`) VALUES
 	(2, 1);
 /*!40000 ALTER TABLE `rel_prestation_adherent` ENABLE KEYS */;
 
 -- Export de données de la table selest.utilisateur : ~4 rows (environ)
-DELETE FROM `utilisateur`;
 /*!40000 ALTER TABLE `utilisateur` DISABLE KEYS */;
 INSERT INTO `utilisateur` (`uti_id`, `uti_identifiant`, `uti_mot_de_passe`, `uti_droits`, `uti_adh_id`) VALUES
 	(1, 'plop', 'azerty', 'W', 1),

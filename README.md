@@ -199,12 +199,14 @@ Récupère les offres et les demandes actives, éventuellement d'une catégorie 
 
 
 ### Récupérer une conversation entre deux utilisateurs
-Récupère les messages entre deux adhérents.
+Récupère les messages entre deux utilisateurs.
 * Route : `get_conversation.php` 
 * Méthode : `GET`
 * Paramètres :
-	* `id_emetteur` - ID d'un adhérent émetteur
-	* `id_destinataire` - ID d'un adhérent destinataire
+	* `id_emetteur` - ID d'un utilisateur émetteur
+	* `id_destinataire` - ID d'un utilisateur destinataire
+	* `id_message` (*optionnel*) - ID du message le plus ancien ayant déjà été récupéré
+	* `nb_messages` (*optionnel*) - Nombre de messages à charger (10 par défaut)
 
 
 ## Requêtes d'écriture
@@ -249,12 +251,11 @@ Ajoute un nouvel adhérent. Créer un adhérent ne créée pas d'utilisateur : l
 	* `id` - l'ID de l'adhérent ajouté
 
 ### Aouter un message
-Ajoute un nouveau message
+Ajoute un nouveau message dans une conversation entre deux utilisateurs
 * Route : `add_message.php`
 * Méthode : `POST`
 * Paramètres :
-	* `mes_adh_id_emetteur` - ID de l'adhérent émetteur
-	* `mes_adh_id_destinataire` - ID de l'adhérent destinataire
+	* `mes_id_destinataire` - ID de l'utilisateur destinataire
 	* `mes_texte` - Contenu du message
 * Renvoie :
 	* `id` - l'ID du message ajouté
