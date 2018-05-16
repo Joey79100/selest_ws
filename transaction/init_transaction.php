@@ -24,4 +24,22 @@ require_once __DIR__ . '/../db_connect/db_connect.php';
 require_once __DIR__ . '/user_connect.php';
 
 
+/*
+ * Ici sont déclarées les quelques autres fonctions qui sont utilisées par certaines des requêtes
+ */
+
+/**
+ * Retourne une copie du tableau excluant toutes les clés-valeurs dont la clé ne comporte pas le préfixe passé en paramètre.
+ *
+ * @param array $array
+ * @param string $prefix
+ * @return array
+ */
+function array_filter_key_prefix($array, $prefix){
+	return array_filter($array, function($key) use($prefix){
+		return preg_match('/^('.$prefix.'_)/i', $key);
+	}, ARRAY_FILTER_USE_KEY);
+}
+
+
 ?>

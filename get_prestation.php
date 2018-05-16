@@ -17,7 +17,23 @@
 		$pre_id = $_GET['pre_id'];
 		
 		// préparation de la requête
-		$query = 'SELECT pre_id, pre_adh_id, pre_cat_id, pre_ltp_id, pre_date_souhaitee_debut, pre_date_souhaitee_fin, pre_date_realisation, pre_description, pre_souets FROM prestation WHERE pre_id = :pre_id';
+		$query = 'SELECT pre_id,
+			adh_id,
+			adh_nom,
+			adh_prenom,
+			pre_cat_id,
+			ltp_nom AS pre_type,
+			pre_date_souhaitee_debut,
+			pre_date_souhaitee_fin,
+			pre_date_realisation,
+			pre_description,
+			pre_souets,
+			pre_date_creation,
+			pre_date_modification
+			FROM prestation
+			INNER JOIN adherent ON adh_id = pre_adh_id
+			INNER JOIN liste_type_prestation ON ltp_id = pre_ltp_id
+			WHERE pre_id = :pre_id';
 
 		$stmt = $db->database->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 		
@@ -27,18 +43,59 @@
 			$stmt->execute(array(
 				':pre_id' => $pre_id
 			));
-			$db->close();
 			
 			
 			// récupération des résultats s'ils existent
 			if($stmt->rowCount() > 0){
 				
-				// récupération des résultats
-				$response["prestation"] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				$result = $stmt->fetchAll(PDO::FETCH_ASSOC)[0];
 				
-				// succès
-				$response["success"] = 1;
-				$code = CODE_OK;
+				$response["prestation"] = array_filter_key_prefix($result, 'pre');
+				$response["adherent"] = array_filter_key_prefix($result, 'adh');
+				
+				
+
+
+				/*
+				 * Récupération des réponses à la prestation
+				 */
+
+				// préparation de la requête
+				$query = 'SELECT
+					adh_id,
+					adh_nom,
+					adh_prenom
+					FROM prestation
+					INNER JOIN rel_prestation_adherent ON rpa_pre_id = pre_id
+					INNER JOIN adherent ON adh_id = rpa_adh_id
+					WHERE pre_id = :pre_id';
+
+				$stmt = $db->database->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+
+				try{
+				
+					// lancement de la requête
+					$stmt->execute(array(
+						':pre_id' => $pre_id
+					));
+					$db->close();
+
+					if($stmt->rowCount() > 0){
+						$response["reponses"] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+					}
+
+					// succès
+					$response["success"] = 1;
+					$code = CODE_OK;
+				
+				} catch(PDOException $e){
+
+					$response["success"] = 0;
+					$response["error"] = $e->getCode();
+					$response["message"] = $e->getMessage();
+					$code = CODE_INTERNAL_SERVER_ERROR;
+				}
+
 
 			} else {
 				
