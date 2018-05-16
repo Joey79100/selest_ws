@@ -83,12 +83,13 @@ INSERT INTO `parametres` (`par_nom`, `par_valeur`) VALUES
 	('nombre_initial_souets', '900');
 /*!40000 ALTER TABLE `parametres` ENABLE KEYS */;
 
--- Export de données de la table selest.prestation : ~3 rows (environ)
+-- Export de données de la table selest.prestation : ~4 rows (environ)
 /*!40000 ALTER TABLE `prestation` DISABLE KEYS */;
-INSERT INTO `prestation` (`pre_id`, `pre_adh_id`, `pre_cat_id`, `pre_ltp_id`, `pre_date_souhaitee_debut`, `pre_date_souhaitee_fin`, `pre_date_realisation`, `pre_description`, `pre_souets`) VALUES
-	(1, 1, 7, 1, NULL, NULL, NULL, 'Vente de chats empaillés', 0),
-	(2, 1, 7, 1, '2018-09-01', NULL, NULL, 'Vente de chats empaillés', 200),
-	(3, 1, 7, 1, NULL, NULL, NULL, 'Vente de chats empaillés', 0);
+INSERT INTO `prestation` (`pre_id`, `pre_adh_id`, `pre_cat_id`, `pre_ltp_id`, `pre_date_souhaitee_debut`, `pre_date_souhaitee_fin`, `pre_date_realisation`, `pre_description`, `pre_souets`, `pre_date_creation`, `pre_date_modification`) VALUES
+	(1, 1, 7, 1, NULL, NULL, NULL, 'Vente de chats empaillés', 0, '2018-05-16 13:38:29', NULL),
+	(2, 1, 7, 1, '2018-09-01', NULL, NULL, 'Vente de chats empaillés', 200, '2018-05-16 13:38:29', NULL),
+	(3, 1, 7, 1, NULL, NULL, NULL, 'Vente de chats empaillés', 0, '2018-05-16 13:38:29', NULL),
+	(4, 1, 7, 1, NULL, NULL, NULL, 'Vente de chats empaillés', 0, '2018-05-16 13:38:29', NULL);
 /*!40000 ALTER TABLE `prestation` ENABLE KEYS */;
 
 -- Export de données de la table selest.rel_prestation_adherent : ~0 rows (environ)

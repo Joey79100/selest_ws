@@ -17,47 +17,57 @@
 			isset($_POST["pre_id"])
 	) {
 
-		// paramètres obligatoires
-		$pre_id = $_POST['pre_id'];
-		$adh_id = $_SESSION['selest_ws']['uti_id'];
+		if(user_is_adherent()){
 
-		// préparation de la requête
-		$query = "INSERT INTO rel_prestation_adherent (rpa_pre_id, rpa_adh_id)
-			VALUES (:pre_id, :adh_id)";
+			// paramètres obligatoires
+			$pre_id = $_POST['pre_id'];
+			$adh_id = $_SESSION['selest_ws']['uti_id'];
 
-		// préparation des paramètres
-		$parametres = array(
-			':pre_id' => $pre_id,
-			':adh_id' => $adh_id
-		);
+			// préparation de la requête
+			$query = "INSERT INTO rel_prestation_adherent (rpa_pre_id, rpa_adh_id)
+				VALUES (:pre_id, :adh_id)";
 
-		$stmt = $db->database->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+			// préparation des paramètres
+			$parametres = array(
+				':pre_id' => $pre_id,
+				':adh_id' => $adh_id
+			);
 
-		try{
+			$stmt = $db->database->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 
-			// lancement de la requête
-			$stmt->execute($parametres);
+			try{
 
-			// succès
-			$response["success"] = 1;
-			$code = CODE_CREATED_NO_CONTENT;
+				// lancement de la requête
+				$stmt->execute($parametres);
 
-		} catch (PDOException $e) {
+				// succès
+				$response["success"] = 1;
+				$code = CODE_CREATED_NO_CONTENT;
 
-			$e->getCode();
-			$e->getMessage();
+			} catch (PDOException $e) {
+
+				$e->getCode();
+				$e->getMessage();
+				
+				// pas de donnée
+				$response["success"] = 0;
+				$response["error"] = $e->getCode();
+				$response["message"] = $e->getMessage();
+				$code = CODE_BAD_REQUEST;
+
+			}
+
+			$db->close();
+			$stmt->closeCursor();
+		
+		} else {
 			
-			// pas de donnée
+			// requête invalide
 			$response["success"] = 0;
-			$response["error"] = $e->getCode();
-			$response["message"] = $e->getMessage();
-			$code = CODE_BAD_REQUEST;
+			$response["message"] = "L'utilisateur n'est pas un adhérent";
+			$code = CODE_FORBIDDEN;
 
 		}
-
-		$db->close();
-		$stmt->closeCursor();
-		
 
 	} else {
 

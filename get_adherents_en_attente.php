@@ -1,7 +1,7 @@
 <?php
 	
 	/*
-	* Récupération des adhérents
+	* Récupération des adhérents n'ayant pas d'utilisateur associé (donc ne pouvant pas encore se connecter)
 	*/
 	
 	// Préparaton des infos nécessaires pour la transaction
@@ -9,16 +9,19 @@
 
 
 	// stopper l'exécution du script si l'utilisateur n'est pas connecté
-	check_connection(RIGHTS_WRITER);
+	check_connection(RIGHTS_ADMIN);
 	
 	
 	// préparation de la requête
-	$query = 'SELECT adh_id, adh_prenom, adh_nom FROM adherent';
+	$query = 'SELECT adh_id, adh_prenom, adh_nom
+		FROM adherent
+		WHERE adh_id NOT IN (SELECT uti_adh_id FROM utilisateur WHERE uti_adh_id IS NOT NULL)
+	';
 
 	$stmt = $db->database->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 	
 	try{
-			
+		
 		$stmt->execute();
 		$db->close();
 		

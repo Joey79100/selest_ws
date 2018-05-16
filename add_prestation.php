@@ -20,60 +20,69 @@
 		AND isset($_POST["pre_souets"])
 	) {
 
-		// paramètres obligatoires
-		$pre_adh_id_auteur = $_SESSION['selest_ws']['uti_id'];
-		$pre_cat_id = $_POST['pre_cat_id'];
-		$pre_ltp_id = $_POST['pre_ltp_id'];
-		$pre_description = $_POST['pre_description'];
-		$pre_souets = $_POST['pre_souets'];
+		if(user_is_adherent()){
 
-		// paramètres optionnels
-		$pre_date_souhaitee_debut = $_POST['pre_date_souhaitee_debut'] ?? null;
-		$pre_date_souhaitee_fin = $_POST['pre_date_souhaitee_fin'] ?? null;
+			// paramètres obligatoires
+			$pre_adh_id_auteur = $_SESSION['selest_ws']['uti_id'];
+			$pre_cat_id = $_POST['pre_cat_id'];
+			$pre_ltp_id = $_POST['pre_ltp_id'];
+			$pre_description = $_POST['pre_description'];
+			$pre_souets = $_POST['pre_souets'];
 
-		// préparation de la requête
-		$query = "INSERT INTO prestation (pre_adh_id, pre_cat_id, pre_ltp_id, pre_date_souhaitee_debut, pre_date_souhaitee_fin, pre_description, pre_souets)
-			VALUES (:pre_adh_id, :pre_cat_id, :pre_ltp_id, :pre_date_souhaitee_debut, :pre_date_souhaitee_fin, :pre_description, :pre_souets)";
+			// paramètres optionnels
+			$pre_date_souhaitee_debut = $_POST['pre_date_souhaitee_debut'] ?? null;
+			$pre_date_souhaitee_fin = $_POST['pre_date_souhaitee_fin'] ?? null;
 
-		// préparation des paramètres
-		$parametres = array(
-			':pre_adh_id' => $pre_adh_id_auteur,
-			':pre_cat_id' => $pre_cat_id,
-			':pre_ltp_id' => $pre_ltp_id,
-			':pre_date_souhaitee_debut' => $pre_date_souhaitee_debut,
-			':pre_date_souhaitee_fin' => $pre_date_souhaitee_fin,
-			':pre_description' => $pre_description,
-			':pre_souets' => $pre_souets
-		);
+			// préparation de la requête
+			$query = "INSERT INTO prestation (pre_adh_id, pre_cat_id, pre_ltp_id, pre_date_souhaitee_debut, pre_date_souhaitee_fin, pre_description, pre_souets)
+				VALUES (:pre_adh_id, :pre_cat_id, :pre_ltp_id, :pre_date_souhaitee_debut, :pre_date_souhaitee_fin, :pre_description, :pre_souets)";
 
-		$stmt = $db->database->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+			// préparation des paramètres
+			$parametres = array(
+				':pre_adh_id' => $pre_adh_id_auteur,
+				':pre_cat_id' => $pre_cat_id,
+				':pre_ltp_id' => $pre_ltp_id,
+				':pre_date_souhaitee_debut' => $pre_date_souhaitee_debut,
+				':pre_date_souhaitee_fin' => $pre_date_souhaitee_fin,
+				':pre_description' => $pre_description,
+				':pre_souets' => $pre_souets
+			);
 
-		try{
+			$stmt = $db->database->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 
-			// lancement de la requête 
-			$stmt->execute($parametres);
+			try{
 
-			// récupération de l'id inséré
-			$response["id"] = $db->database->lastInsertId();
+				// lancement de la requête 
+				$stmt->execute($parametres);
 
-			// succès
-			$response["success"] = 1;
-			$code = CODE_CREATED_CONTENT;
+				// récupération de l'id inséré
+				$response["id"] = $db->database->lastInsertId();
 
-		} catch(PDOException $e) {
+				// succès
+				$response["success"] = 1;
+				$code = CODE_CREATED_CONTENT;
 
+			} catch(PDOException $e) {
+
+				$response["success"] = 0;
+				$response["error"] = $e->getCode();
+				$response["message"] = $e->getMessage();
+				$code = CODE_INTERNAL_SERVER_ERROR;
+
+			}
+
+			$db->close();
+			$stmt->closeCursor();
+			
+		} else {
+			
+			// requête invalide
 			$response["success"] = 0;
-			$response["error"] = $e->getCode();
-			$response["message"] = $e->getMessage();
-			$code = CODE_INTERNAL_SERVER_ERROR;
+			$response["message"] = "L'utilisateur n'est pas un adhérent";
+			$code = CODE_FORBIDDEN;
 
 		}
-
-
-		$db->close();
-		$stmt->closeCursor();
 		
-
 	} else {
 
 		// requête invalide

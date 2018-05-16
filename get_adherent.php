@@ -20,31 +20,41 @@
 		$query = 'SELECT adh_id, adh_prenom, adh_nom, adh_souets FROM adherent WHERE adh_id = :adh_id';
 
 		$stmt = $db->database->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-		$stmt->execute(array(
-			':adh_id' => $adh_id
-		));
-		$db->close();
 		
-		
-		// récupération des résultats s'ils existent
-		if($stmt->rowCount() > 0){
-			
-			// récupération des résultats
-			$response["adherents"] = $stmt->fetchAll(PDO::FETCH_ASSOC);
-			
-			// succès
-			$response["success"] = 1;
-			$code = CODE_OK;
+		try{
 
-		} else {
-			
-			// pas de donnée
+			$stmt->execute(array(
+				':adh_id' => $adh_id
+			));
+			$db->close();
+
+			// récupération des résultats s'ils existent
+			if($stmt->rowCount() > 0){
+				
+				// récupération des résultats
+				$response["adherents"] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				
+				// succès
+				$response["success"] = 1;
+				$code = CODE_OK;
+
+			} else {
+				
+				// pas de donnée
+				$response["success"] = 0;
+				$response["message"] = "Aucun résultat";
+				$code = CODE_NOT_FOUND;
+
+			}
+
+		} catch(PDOException $e){
+
 			$response["success"] = 0;
-			$response["message"] = "Aucun résultat";
-			$code = CODE_NOT_FOUND;
-
+			$response["error"] = $e->getCode();
+			$response["message"] = $e->getMessage();
+			$code = CODE_INTERNAL_SERVER_ERROR;
 		}
-
+		
 		$stmt->closeCursor();
 		
 

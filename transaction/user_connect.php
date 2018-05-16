@@ -93,9 +93,10 @@ function user_logoff(){
  *
  * @param int 		$uti_id
  * @param string	$uti_droits
+ * @param string	$uti_adh_id
  * @return string	Token
  */
-function user_login($uti_id, $uti_droits){
+function user_login($uti_id, $uti_droits, $uti_adh_id){
 
 	user_logoff();
 
@@ -103,9 +104,18 @@ function user_login($uti_id, $uti_droits){
 	$_SESSION['selest_ws']['token'] = $token;
 	$_SESSION['selest_ws']['uti_id'] = $uti_id;
 	$_SESSION['selest_ws']['uti_droits'] = $uti_droits;
+	$_SESSION['selest_ws']['uti_adh_id'] = $uti_adh_id;
 
 	return $token;
 
 }
 
+/**
+ * Retourne si l'utilisateur est adhérent ou non
+ *
+ * @return boolean
+ */
+function user_is_adherent(){
+	return isset($_SESSION['selest_ws']['uti_adh_id']);
+}
 ?>

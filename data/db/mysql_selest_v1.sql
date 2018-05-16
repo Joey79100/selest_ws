@@ -96,6 +96,8 @@ CREATE TABLE IF NOT EXISTS `prestation` (
   `pre_date_realisation` date DEFAULT NULL,
   `pre_description` varchar(100) NOT NULL,
   `pre_souets` int(11) NOT NULL,
+  `pre_date_creation` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `pre_date_modification` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`pre_id`),
   KEY `fk_pre_ltp_id` (`pre_ltp_id`),
   KEY `pre_cat_id` (`pre_cat_id`),
@@ -103,7 +105,7 @@ CREATE TABLE IF NOT EXISTS `prestation` (
   CONSTRAINT `fk_pre_adh_id` FOREIGN KEY (`pre_adh_id`) REFERENCES `adherent` (`adh_id`),
   CONSTRAINT `fk_pre_cat_id` FOREIGN KEY (`pre_cat_id`) REFERENCES `categorie` (`cat_id`),
   CONSTRAINT `fk_pre_ltp_id` FOREIGN KEY (`pre_ltp_id`) REFERENCES `liste_type_prestation` (`ltp_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- Les données exportées n'étaient pas sélectionnées.
 -- Export de la structure de la table selest. rel_prestation_adherent

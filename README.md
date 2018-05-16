@@ -338,7 +338,7 @@ Crée un utilisateur. Un utilisateur correspond à un adhérent dans la plupart 
 	* `id` - l'ID de l'utilisateur ajouté
 
 ### Ajouter un adhérent
-Ajoute un nouvel adhérent. Créer un adhérent ne créée pas d'utilisateur : les utilisateurs ne peuvent être créés que par des administrateurs.
+Ajoute un nouvel adhérent. Créer un adhérent ne crée pas d'utilisateur : les utilisateurs ne peuvent être créés que par des administrateurs.
 * Route : `add_adherent.php`
 * Méthode : `POST`
 * Paramètres :

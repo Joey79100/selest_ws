@@ -29,7 +29,10 @@
 		if($stmt->rowCount() == 1){
 			
 			// vérification que le mot de passe coïncide
-			$query = 'SELECT uti_id, uti_droits FROM utilisateur WHERE uti_identifiant = :uti_identifiant AND uti_mot_de_passe = :uti_mot_de_passe';
+			$query = 'SELECT uti_id, uti_droits, uti_adh_id
+				FROM utilisateur
+				WHERE uti_identifiant = :uti_identifiant
+				AND uti_mot_de_passe = :uti_mot_de_passe';
 
 			$stmt = $db->database->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 			$stmt->execute(array(
@@ -45,13 +48,16 @@
 				$resultat = $stmt->fetchAll(PDO::FETCH_ASSOC);
 				$uti_id = $resultat[0]['uti_id'];
 				$uti_droits = $resultat[0]['uti_droits'];
+				$uti_adh_id = $resultat[0]['uti_adh_id'];
 
 				// génération d'un token et sauvegarde des infos de connexion de l'utilisateur
-				$token = user_login($uti_id, $uti_droits);
+				$token = user_login($uti_id, $uti_droits, $uti_adh_id);
 
 				// envoi du token
 				$response["success"] = 1;
 				$response["token"] = $token;
+				$response['droits'] = $uti_droits;
+				$response['id_adherent'] = $uti_adh_id;
 				$code = CODE_OK;
 
 			} else {

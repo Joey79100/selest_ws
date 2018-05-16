@@ -1,8 +1,7 @@
 {
 	"info": {
-		"name": "selest_ws",
 		"_postman_id": "085fd01a-2dde-bc3d-2f81-dc8d802e2af3",
-		"description": "",
+		"name": "selest_ws",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -57,8 +56,7 @@
 					"query": [
 						{
 							"key": "type",
-							"value": "demande",
-							"equals": true
+							"value": "demande"
 						}
 					]
 				},
@@ -93,8 +91,7 @@
 					"query": [
 						{
 							"key": "type",
-							"value": "offres",
-							"equals": true
+							"value": "offres"
 						}
 					]
 				},
@@ -129,12 +126,40 @@
 					"query": [
 						{
 							"key": "adh_id",
-							"value": "1",
-							"equals": true
+							"value": "1"
 						}
 					]
 				},
 				"description": "Retourne les informations de l'adhérent d'ID 1"
+			},
+			"response": []
+		},
+		{
+			"name": "Récupérer adhérents en attente",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "27d8c37dd9edef5566fa53b102795bfc38b433b219f22b3736cf0360babea1b4"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost/selest_ws/get_adherents_en_attente.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"selest_ws",
+						"get_adherents_en_attente.php"
+					]
+				},
+				"description": "Retourne la liste des adhérents n'ayant pas d'utilisateur associés (donc ne pouvant pas encore se connecter)"
 			},
 			"response": []
 		},
@@ -165,20 +190,17 @@
 					"query": [
 						{
 							"key": "id_destinataire",
-							"value": "2",
-							"equals": true
+							"value": "2"
 						},
 						{
 							"key": "id_message",
 							"value": "2",
-							"equals": true,
 							"description": "Dernier message déjà récupéré par l'application",
 							"disabled": true
 						},
 						{
 							"key": "nb_messages",
 							"value": "5",
-							"equals": true,
 							"description": "Nombre de messages à renvoyer",
 							"disabled": true
 						}
@@ -216,26 +238,22 @@
 						{
 							"key": "id_emetteur",
 							"value": "3",
-							"equals": true,
 							"description": "Second ID d'utilisateur, utilisable uniquement par les admins pour voir des conversations des adhérents",
 							"disabled": true
 						},
 						{
 							"key": "id_destinataire",
-							"value": "2",
-							"equals": true
+							"value": "2"
 						},
 						{
 							"key": "id_message",
 							"value": "15",
-							"equals": true,
 							"description": "Dernier message déjà récupéré par l'application",
 							"disabled": true
 						},
 						{
 							"key": "nb_messages",
 							"value": "3",
-							"equals": true,
 							"description": "Nombre de messages à renvoyer",
 							"disabled": true
 						}
@@ -378,7 +396,7 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "54a5feece14aa2acd040191e4302ddddc7e26396a7431bcb7dc0d16e8d7ae0e8"
+						"value": "096ab7450b85ee8b7d0f53d1c0b65d3ad64d4e8f76f9c4c09ad51424dbe906d0"
 					}
 				],
 				"body": {
@@ -492,13 +510,18 @@
 			"name": "Ajouter réponse",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "token",
+						"value": "8a00c07a1d448993442c3a6e294b7139fe1e13ca1112ac385f79e4bc8b811924"
+					}
+				],
 				"body": {
 					"mode": "formdata",
 					"formdata": [
 						{
 							"key": "pre_id",
-							"value": "2",
+							"value": "4",
 							"description": "",
 							"type": "text"
 						},
@@ -521,7 +544,7 @@
 						"add_reponse.php"
 					]
 				},
-				"description": "Ajoute une réponse de l'adhérent 1 à la prestation 2"
+				"description": "Ajoute une réponse de l'adhérent 1 à la prestation 4"
 			},
 			"response": []
 		},
@@ -547,8 +570,7 @@
 					"query": [
 						{
 							"key": "pre_id",
-							"value": "1",
-							"equals": true
+							"value": "1"
 						}
 					]
 				},
@@ -578,8 +600,7 @@
 					"query": [
 						{
 							"key": "type",
-							"value": "offre",
-							"equals": true
+							"value": "offre"
 						}
 					]
 				},
@@ -720,6 +741,43 @@
 					]
 				},
 				"description": "Marque tous les messages d'une conversation comme lus"
+			},
+			"response": []
+		},
+		{
+			"name": "S'authentifier (adhérent)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "identifiant",
+							"value": "plop",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "mot_de_passe",
+							"value": "azerty",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/selest_ws/authentification.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"selest_ws",
+						"authentification.php"
+					]
+				},
+				"description": "Tente une connexion utilisateur (adhérent, droits normaux) à la base de données, et si elle a fonctionné, renvoie un token à utiliser pour chaque requête"
 			},
 			"response": []
 		}
