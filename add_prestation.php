@@ -15,7 +15,7 @@
 	// vérification de la présence des données
 	if (
 			isset($_POST["pre_cat_id"])
-		AND isset($_POST["pre_ltp_id"])
+		AND isset($_POST["pre_type"])
 		AND isset($_POST["pre_description"])
 		AND isset($_POST["pre_souets"])
 	) {
@@ -23,9 +23,9 @@
 		if(user_is_adherent()){
 
 			// paramètres obligatoires
-			$pre_adh_id_auteur = $_SESSION['selest_ws']['uti_id'];
+			$pre_adh_id_auteur = $_SESSION['selest_ws']['uti_adh_id'];
 			$pre_cat_id = $_POST['pre_cat_id'];
-			$pre_ltp_id = $_POST['pre_ltp_id'];
+			$pre_type = $_POST['pre_type'];
 			$pre_description = $_POST['pre_description'];
 			$pre_souets = $_POST['pre_souets'];
 
@@ -35,13 +35,13 @@
 
 			// préparation de la requête
 			$query = "INSERT INTO prestation (pre_adh_id, pre_cat_id, pre_ltp_id, pre_date_souhaitee_debut, pre_date_souhaitee_fin, pre_description, pre_souets)
-				VALUES (:pre_adh_id, :pre_cat_id, :pre_ltp_id, :pre_date_souhaitee_debut, :pre_date_souhaitee_fin, :pre_description, :pre_souets)";
+				VALUES (:pre_adh_id, :pre_cat_id, (SELECT ltp_id FROM liste_type_prestation WHERE ltp_nom = :pre_type), :pre_date_souhaitee_debut, :pre_date_souhaitee_fin, :pre_description, :pre_souets)";
 
 			// préparation des paramètres
 			$parametres = array(
 				':pre_adh_id' => $pre_adh_id_auteur,
 				':pre_cat_id' => $pre_cat_id,
-				':pre_ltp_id' => $pre_ltp_id,
+				':pre_type' => $pre_type,
 				':pre_date_souhaitee_debut' => $pre_date_souhaitee_debut,
 				':pre_date_souhaitee_fin' => $pre_date_souhaitee_fin,
 				':pre_description' => $pre_description,
@@ -56,7 +56,7 @@
 				$stmt->execute($parametres);
 
 				// récupération de l'id inséré
-				$response["id"] = $db->database->lastInsertId();
+				$response["prestation"]["pre_id"] = $db->database->lastInsertId();
 
 				// succès
 				$response["success"] = 1;
@@ -64,10 +64,7 @@
 
 			} catch(PDOException $e) {
 
-				$response["success"] = 0;
-				$response["error"] = $e->getCode();
-				$response["message"] = $e->getMessage();
-				$code = CODE_INTERNAL_SERVER_ERROR;
+				stopWithError($e, "Echec de l'ajout de la prestation");
 
 			}
 

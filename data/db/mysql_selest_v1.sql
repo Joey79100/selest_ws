@@ -43,14 +43,21 @@ CREATE TABLE IF NOT EXISTS `categorie` (
 -- Export de la structure de la table selest. conversation
 CREATE TABLE IF NOT EXISTS `conversation` (
   `con_id` int(11) NOT NULL AUTO_INCREMENT,
-  `con_uti_id_1` int(11) NOT NULL,
-  `con_uti_id_2` int(11) NOT NULL,
-  PRIMARY KEY (`con_id`),
-  KEY `fk_con_uti_id_1` (`con_uti_id_1`),
-  KEY `fk_con_uti_id_2` (`con_uti_id_2`),
-  CONSTRAINT `fk_con_uti_id_1` FOREIGN KEY (`con_uti_id_1`) REFERENCES `utilisateur` (`uti_id`),
-  CONSTRAINT `fk_con_uti_id_2` FOREIGN KEY (`con_uti_id_2`) REFERENCES `utilisateur` (`uti_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+  `con_nom` varchar(64) DEFAULT NULL,
+  PRIMARY KEY (`con_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4;
+
+-- Les données exportées n'étaient pas sélectionnées.
+-- Export de la structure de la table selest. historique
+CREATE TABLE IF NOT EXISTS `historique` (
+  `his_pre_id` int(11) NOT NULL,
+  `his_adh_id` int(11) NOT NULL,
+  `his_type_adherent` enum('auteur','participant') NOT NULL,
+  `his_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `his_montant` int(11) NOT NULL,
+  `his_solde_avant` int(11) NOT NULL,
+  `his_solde_apres` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Les données exportées n'étaient pas sélectionnées.
 -- Export de la structure de la table selest. liste_type_prestation
@@ -68,13 +75,12 @@ CREATE TABLE IF NOT EXISTS `message` (
   `mes_uti_id_emetteur` int(11) NOT NULL,
   `mes_texte` varchar(512) NOT NULL,
   `mes_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `mes_lu` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`mes_id`),
   KEY `fk_mes_con_id` (`mes_con_id`),
   KEY `fk_mes_uti_id_emetteur` (`mes_uti_id_emetteur`),
   CONSTRAINT `fk_mes_con_id` FOREIGN KEY (`mes_con_id`) REFERENCES `conversation` (`con_id`),
   CONSTRAINT `fk_mes_uti_id_emetteur` FOREIGN KEY (`mes_uti_id_emetteur`) REFERENCES `utilisateur` (`uti_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
 
 -- Les données exportées n'étaient pas sélectionnées.
 -- Export de la structure de la table selest. parametres
@@ -105,7 +111,18 @@ CREATE TABLE IF NOT EXISTS `prestation` (
   CONSTRAINT `fk_pre_adh_id` FOREIGN KEY (`pre_adh_id`) REFERENCES `adherent` (`adh_id`),
   CONSTRAINT `fk_pre_cat_id` FOREIGN KEY (`pre_cat_id`) REFERENCES `categorie` (`cat_id`),
   CONSTRAINT `fk_pre_ltp_id` FOREIGN KEY (`pre_ltp_id`) REFERENCES `liste_type_prestation` (`ltp_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+
+-- Les données exportées n'étaient pas sélectionnées.
+-- Export de la structure de la table selest. rel_conversation_utilisateur
+CREATE TABLE IF NOT EXISTS `rel_conversation_utilisateur` (
+  `rcu_con_id` int(11) NOT NULL,
+  `rcu_uti_id` int(11) NOT NULL,
+  PRIMARY KEY (`rcu_con_id`,`rcu_uti_id`),
+  KEY `fk_rcu_uti_id` (`rcu_uti_id`),
+  CONSTRAINT `fk_rcu_con_id` FOREIGN KEY (`rcu_con_id`) REFERENCES `conversation` (`con_id`),
+  CONSTRAINT `fk_rcu_uti_id` FOREIGN KEY (`rcu_uti_id`) REFERENCES `utilisateur` (`uti_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Les données exportées n'étaient pas sélectionnées.
 -- Export de la structure de la table selest. rel_prestation_adherent
@@ -129,7 +146,7 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   PRIMARY KEY (`uti_id`),
   KEY `fk_uti_adh_id` (`uti_adh_id`),
   CONSTRAINT `fk_uti_adh_id` FOREIGN KEY (`uti_adh_id`) REFERENCES `adherent` (`adh_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
 
 -- Les données exportées n'étaient pas sélectionnées.
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

@@ -90,12 +90,9 @@
 				
 				} catch(PDOException $e){
 
-					$response["success"] = 0;
-					$response["error"] = $e->getCode();
-					$response["message"] = $e->getMessage();
-					$code = CODE_INTERNAL_SERVER_ERROR;
-				}
+					stopWithError($e, "Echec de la récupération des réponses à la prestation");
 
+				}
 
 			} else {
 				
@@ -108,10 +105,8 @@
 
 		} catch(PDOException $e){
 
-			$response["success"] = 0;
-			$response["error"] = $e->getCode();
-			$response["message"] = $e->getMessage();
-			$code = CODE_INTERNAL_SERVER_ERROR;
+			stopWithError($e, "Echec de la récupératon de la prestation");
+
 		}
 
 		$stmt->closeCursor();

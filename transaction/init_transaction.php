@@ -41,5 +41,34 @@ function array_filter_key_prefix($array, $prefix){
 	}, ARRAY_FILTER_USE_KEY);
 }
 
+/**
+ * Stoppe l'exécution du script et envoie le message d'erreur.
+ * Si une transaction était en cours, alors elle sera arrêtée.
+ *
+ * @param PDOException $exception
+ * @param string $message
+ * @param boolean $stopTransaction
+ * @return void
+ */
+function stopWithError($exception, $message = "", $stopTransaction = false){
+
+	global $response, $db;
+
+	if($stopTransaction){
+
+		// annulation de la transaction SQL
+		$db->database->rollBack();
+
+	}
+
+	$response["success"] = 0;
+	$response["error"] = $exception->getCode();
+	$response["message"] = $message. " : ".$exception->getMessage();
+	$code = CODE_INTERNAL_SERVER_ERROR;
+
+	// envoi du résultat
+	require_once __DIR__ . '/display_result.php';
+	
+}
 
 ?>

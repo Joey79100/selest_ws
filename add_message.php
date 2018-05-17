@@ -14,141 +14,51 @@
 	
 	// vérification de la présence des données
 	if (
-			isset($_POST["id_destinataire"])
+			isset($_POST["id_conversation"])
 		AND isset($_POST["texte"])
 	) {
 
 		// paramètres obligatoires
 		$mes_uti_id_emetteur = $_SESSION['selest_ws']['uti_id'];
-		$mes_uti_id_destinataire = $_POST['id_destinataire'];
+		$con_id = $_POST['id_conversation'];
+		$mes_texte = $_POST['texte'];
 
-		// on vérifie que l'on n'envoie pas un message à soi-même
-		if($mes_uti_id_emetteur != $mes_uti_id_destinataire){
 
-			$mes_texte = $_POST['texte'];
+		// préparation de la requête
+		$query = "INSERT INTO message (mes_con_id, mes_uti_id_emetteur, mes_texte)
+		VALUES (:mes_con_id, :mes_uti_id_emetteur, :mes_texte)";
 
-			/**
-			 * D'abord on récupère l'ID de la conversation (s'il n'y a pas de conversation, on en crée une)
-			 */
+		// préparation des paramètres
+		$parametres = array(
+			':mes_con_id' => $con_id,
+			':mes_uti_id_emetteur' => $mes_uti_id_emetteur,
+			':mes_texte' => $mes_texte
+		);
 
-			// préparation de la requête
-			$query = "SELECT con_id
-				FROM conversation
-				WHERE :mes_uti_id_emetteur IN (con_uti_id_1, con_uti_id_2) AND :mes_uti_id_destinataire IN (con_uti_id_1, con_uti_id_2)";
+		$stmt = $db->database->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 
-			// préparation des paramètres
-			$parametres = array(
-				':mes_uti_id_emetteur' => $mes_uti_id_emetteur,
-				':mes_uti_id_destinataire' => $mes_uti_id_destinataire
-			);
-
-			$stmt = $db->database->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-
-			// lancement de la requête de recherche de la conversation
+		try{
+			// lancement de la requête d'insertion du message
 			$stmt->execute($parametres);
 			
+			// récupération de l'id inséré
+			$mes_id = $db->database->lastInsertId();
 
-			// Si on a trouvé une conversation correspondant, on récupère son ID
-			if($stmt->rowCount() > 0){
+			// succès
+			$response["success"] = 1;
+			$response["message"]["mes_id"] = $mes_id;
+			$code = CODE_CREATED_CONTENT;
 
-				$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-				$con_id = $result[0]["con_id"];
+		} catch (PDOException $e) {
 
-			} else {
+			stopWithError($e, "Echec de l'ajout du message");
 
-				// On n'a pas trouvé de conversatin, on en crée une
-
-				// préparation de la requête
-				$query = "INSERT INTO conversation (con_uti_id_1, con_uti_id_2)
-					VALUES (:con_uti_id_1, :con_uti_id_2)";
-
-				// préparation des paramètres
-				$parametres = array(
-					':con_uti_id_1' => $mes_uti_id_emetteur,
-					':con_uti_id_2' => $mes_uti_id_destinataire
-				);
-
-				$stmt = $db->database->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-
-				try{
-
-					// lancement de la requête
-					$stmt->execute($parametres);
-
-					// récupération de l'id inséré
-					$con_id = $db->database->lastInsertId();
-
-				} catch (PDOException $e) {
-
-					// échec de la création de l'utilisateur
-					$response["success"] = 0;
-					$response["error"] = $e->getCode();
-					$response["message"] = $e->getMessage();
-					$code = CODE_INTERNAL_SERVER_ERROR;
-
-					// envoi du résultat
-					require_once __DIR__ . '/transaction/display_result.php';
-
-				}
-				
-
-			}
-
-
-
-
-			/**
-			 * Enfin, on ajoute le message
-			 */ 
-
-			// préparation de la requête
-			$query = "INSERT INTO message (mes_con_id, mes_uti_id_emetteur, mes_texte)
-			VALUES (:mes_con_id, :mes_uti_id_emetteur, :mes_texte)";
-
-			// préparation des paramètres
-			$parametres = array(
-				':mes_con_id' => $con_id,
-				':mes_uti_id_emetteur' => $mes_uti_id_emetteur,
-				':mes_texte' => $mes_texte
-			);
-
-			$stmt = $db->database->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-
-			try{
-				// lancement de la requête d'insertion du message
-				$stmt->execute($parametres);
-				
-				// récupération de l'id inséré
-				$mes_id = $db->database->lastInsertId();
-
-				// succès
-				$response["success"] = 1;
-				$response["message"]["mes_id"] = $mes_id;
-				$code = CODE_CREATED_CONTENT;
-
-			} catch (PDOException $e) {
-
-				// échec de la création de l'utilisateur
-				$response["success"] = 0;
-				$response["error"] = $e->getCode();
-				$response["message"] = $e->getMessage();
-				$code = CODE_INTERNAL_SERVER_ERROR;
-
-			}
-
-
-			$db->close();
-			$stmt->closeCursor();
-
-			
-		} else {
-
-			// requête invalide
-			$response["success"] = 0;
-			$response["message"] = "Requête invalide - émetteur et récepteur identiques";
-			$code = CODE_BAD_REQUEST;
-	
 		}
+
+
+		$db->close();
+		$stmt->closeCursor();
+
 
 	} else {
 

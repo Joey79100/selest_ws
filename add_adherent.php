@@ -65,11 +65,7 @@
 
 		} catch (PDOException $e) {
 
-			// échec de la création de l'utilisateur
-			$response["success"] = 0;
-			$response["error"] = $e->getCode();
-			$response["message"] = $e->getMessage();
-			$code = CODE_INTERNAL_SERVER_ERROR;
+			stopWithError($e, "Echec de la création de l'adhérent");
 
 		}
 

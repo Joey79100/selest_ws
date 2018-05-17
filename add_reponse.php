@@ -21,7 +21,7 @@
 
 			// paramètres obligatoires
 			$pre_id = $_POST['pre_id'];
-			$adh_id = $_SESSION['selest_ws']['uti_id'];
+			$adh_id = $_SESSION['selest_ws']['uti_adh_id'];
 
 			// préparation de la requête
 			$query = "INSERT INTO rel_prestation_adherent (rpa_pre_id, rpa_adh_id)
@@ -45,14 +45,11 @@
 				$code = CODE_CREATED_NO_CONTENT;
 
 			} catch (PDOException $e) {
-
-				$e->getCode();
-				$e->getMessage();
 				
 				// pas de donnée
 				$response["success"] = 0;
 				$response["error"] = $e->getCode();
-				$response["message"] = $e->getMessage();
+				$response["message"] = "Echec de l'ajout de la réponse à la prestation : ".$e->getMessage();
 				$code = CODE_BAD_REQUEST;
 
 			}
