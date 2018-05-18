@@ -40,31 +40,17 @@ INSERT INTO `categorie` (`cat_id`, `cat_nom`) VALUES
 -- Export de données de la table selest.conversation : ~22 rows (environ)
 /*!40000 ALTER TABLE `conversation` DISABLE KEYS */;
 INSERT INTO `conversation` (`con_id`, `con_nom`) VALUES
-	(1, 'La révolution a eu lieu, cher Plop. Signé Master.'),
-	(2, 'La révolution a eu lieu, cher Plop. Signé Master.'),
-	(3, 'La révolution a eu lieu, cher Plop. Signé Master.'),
-	(4, 'La révolution a eu lieu, cher Plop. Signé Master.'),
-	(5, 'La révolution a eu lieu, cher Plop. Signé Master.'),
-	(6, 'La révolution a eu lieu, cher Plop. Signé Master.'),
-	(7, 'La révolution a eu lieu, cher Plop. Signé Master.'),
-	(8, 'La révolution a eu lieu, cher Plop. Signé Master.'),
-	(9, 'La révolution a eu lieu, cher Plop. Signé Master.'),
-	(10, 'La révolution a eu lieu, cher Plop. Signé Master.'),
-	(11, 'La révolution a eu lieu, cher Plop. Signé Master.'),
-	(12, 'La révolution a eu lieu, cher Plop. Signé Master.'),
-	(13, 'La révolution a eu lieu, cher Plop. Signé Master.'),
-	(14, 'La révolution a eu lieu, cher Plop. Signé Master.'),
-	(15, 'La révolution a eu lieu, cher Plop. Signé Master.'),
-	(16, 'La révolution a eu lieu, cher Plop. Signé Master.'),
-	(17, 'La révolution a eu lieu, cher Plop. Signé Master.'),
-	(18, 'La révolution a eu lieu, cher Plop. Signé Master.'),
-	(19, 'La révolution a eu lieu, cher Plop. Signé Master.'),
-	(20, 'La révolution a eu lieu, cher Plop. Signé Master.'),
-	(21, 'La révolution a eu lieu, cher Plop. Signé Master.'),
-	(22, 'La révolution a eu lieu, cher Plop. Signé Master.');
+	(1, 'testest'),
+	(2, 'testest'),
+	(3, 'testest'),
+	(18, 'testest'),
+	(19, 'testest'),
+	(20, 'testest'),
+	(21, 'testest'),
+	(22, 'testest');
 /*!40000 ALTER TABLE `conversation` ENABLE KEYS */;
 
--- Export de données de la table selest.historique : ~0 rows (environ)
+-- Export de données de la table selest.historique : ~10 rows (environ)
 /*!40000 ALTER TABLE `historique` DISABLE KEYS */;
 INSERT INTO `historique` (`his_pre_id`, `his_adh_id`, `his_type_adherent`, `his_date`, `his_montant`, `his_solde_avant`, `his_solde_apres`) VALUES
 	(11, 2, 'auteur', '2018-05-17 16:27:53', 50, 2080, 2380),
@@ -120,7 +106,8 @@ INSERT INTO `message` (`mes_id`, `mes_con_id`, `mes_uti_id_emetteur`, `mes_texte
 	(29, 22, 1, 'La révolution a eu lieu, cher Plop. Signé Master.', '2018-05-17 09:21:18'),
 	(30, 22, 1, 'La révolution a eu lieu, cher Plop. Signé Master.', '2018-05-17 09:21:21'),
 	(31, 22, 1, 'La révolution a eu lieu, cher Plop. Signé Master.', '2018-05-17 09:21:47'),
-	(32, 22, 1, 'La révolution a eu lieu, cher Plop. Signé Master.', '2018-05-17 09:22:15');
+	(32, 22, 1, 'La révolution a eu lieu, cher Plop. Signé Master.', '2018-05-17 09:22:15'),
+	(33, 22, 1, 'testest', '2018-05-18 08:51:32');
 /*!40000 ALTER TABLE `message` ENABLE KEYS */;
 
 -- Export de données de la table selest.parametres : 1 rows
@@ -143,20 +130,21 @@ INSERT INTO `prestation` (`pre_id`, `pre_adh_id`, `pre_cat_id`, `pre_ltp_id`, `p
 
 -- Export de données de la table selest.rel_conversation_utilisateur : ~13 rows (environ)
 /*!40000 ALTER TABLE `rel_conversation_utilisateur` DISABLE KEYS */;
-INSERT INTO `rel_conversation_utilisateur` (`rcu_con_id`, `rcu_uti_id`) VALUES
-	(3, 1),
-	(21, 1),
-	(22, 1),
-	(1, 2),
-	(3, 2),
-	(21, 2),
-	(22, 2),
-	(1, 3),
-	(2, 3),
-	(21, 3),
-	(22, 3),
-	(2, 4),
-	(22, 4);
+INSERT INTO `rel_conversation_utilisateur` (`rcu_con_id`, `rcu_uti_id`, `rcu_nb_messages_non_lus`) VALUES
+	(1, 2, 0),
+	(1, 3, 0),
+	(2, 1, 0),
+	(2, 3, 0),
+	(2, 4, 0),
+	(3, 1, 0),
+	(3, 2, 0),
+	(21, 1, 0),
+	(21, 2, 0),
+	(21, 3, 0),
+	(22, 1, 0),
+	(22, 2, 0),
+	(22, 3, 0),
+	(22, 4, 0);
 /*!40000 ALTER TABLE `rel_conversation_utilisateur` ENABLE KEYS */;
 
 -- Export de données de la table selest.rel_prestation_adherent : ~4 rows (environ)
@@ -174,7 +162,7 @@ INSERT INTO `utilisateur` (`uti_id`, `uti_identifiant`, `uti_mot_de_passe`, `uti
 	(1, 'plop', 'azerty', 'W', 1),
 	(2, 'master', 'system', 'A', NULL),
 	(3, 'monsieur', 'toctoc', 'W', NULL),
-	(4, 'monsieur', 'toctoc', 'W', 7),
+	(4, 'johnny', 'allumezlefeu', 'W', 7),
 	(8, 'monsieur', 'toctoc', 'W', 11),
 	(9, 'brenda', 'brenda', 'W', 2),
 	(10, 'criquette', 'criquette', 'W', 3),

@@ -118,6 +118,7 @@ CREATE TABLE IF NOT EXISTS `prestation` (
 CREATE TABLE IF NOT EXISTS `rel_conversation_utilisateur` (
   `rcu_con_id` int(11) NOT NULL,
   `rcu_uti_id` int(11) NOT NULL,
+  `rcu_nb_messages_non_lus` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`rcu_con_id`,`rcu_uti_id`),
   KEY `fk_rcu_uti_id` (`rcu_uti_id`),
   CONSTRAINT `fk_rcu_con_id` FOREIGN KEY (`rcu_con_id`) REFERENCES `conversation` (`con_id`),

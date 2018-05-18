@@ -289,7 +289,7 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "43aec69e7265848cba87802c172f6c6dbabf729dd4bb24bdfac56dba6172b436"
+								"value": "0f914f4c00d95d3fc0fb78a6bfb45853670b8b42c5c265404f319a79649643b1"
 							}
 						],
 						"body": {},
@@ -315,7 +315,7 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "08fd2bd1730c86e5b59b62be463d6235eae0ee8f13fe2a116aaee8a0af6d3902"
+								"value": "0f914f4c00d95d3fc0fb78a6bfb45853670b8b42c5c265404f319a79649643b1"
 							}
 						],
 						"body": {
@@ -323,20 +323,16 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost/selest_ws/get_conversation.php?id_destinataire=2",
+							"raw": "http://localhost/selest_ws/get_messages.php?id_conversation=2",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"path": [
 								"selest_ws",
-								"get_conversation.php"
+								"get_messages.php"
 							],
 							"query": [
-								{
-									"key": "id_destinataire",
-									"value": "2"
-								},
 								{
 									"key": "id_message",
 									"value": "2",
@@ -348,6 +344,10 @@
 									"value": "5",
 									"description": "Nombre de messages à renvoyer",
 									"disabled": true
+								},
+								{
+									"key": "id_conversation",
+									"value": "2"
 								}
 							]
 						},
@@ -362,7 +362,7 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "ef1ae1bf1342ddab57f6d0520fe2f1c9f3103f7c2bc3f977f2b3cefb87e855a8"
+								"value": "0f914f4c00d95d3fc0fb78a6bfb45853670b8b42c5c265404f319a79649643b1"
 							}
 						],
 						"body": {
@@ -376,7 +376,7 @@
 								},
 								{
 									"key": "texte",
-									"value": "La révolution a eu lieu, cher Plop. Signé Master.",
+									"value": "testest",
 									"description": "",
 									"type": "text"
 								}

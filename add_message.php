@@ -70,11 +70,13 @@
 		// préparation de la requête
 		$query = "UPDATE rel_conversation_utilisateur SET
 			rcu_nb_messages_non_lus = rcu_nb_messages_non_lus + 1
-			WHERE rcu_con_id = :rcu_con_id";
+			WHERE rcu_con_id = :rcu_con_id
+			AND rcu_uti_id != :rcu_uti_id";
 
 		// préparation des paramètres
 		$parametres = array(
-			':rcu_con_id' => $con_id
+			':rcu_con_id' => $con_id,
+			':rcu_uti_id' => $mes_uti_id_emetteur
 		);
 
 		$stmt = $db->database->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));

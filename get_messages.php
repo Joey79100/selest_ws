@@ -17,7 +17,7 @@
 		
 		$id_conversation = $_GET["id_conversation"];
 		$query_where = "";
-		$args_additionnels = array();
+		$parametres_additionnels = array();
 		
 		// Si on a un ID d'émetteur passé en paramètre, c'est qu'on est un administrateur lisant une conversation entre deux utilisateurs
 		if(isset($_GET["id_emetteur"])){
@@ -32,7 +32,7 @@
 		if(isset($_GET["id_message"])){
 			$id_message = $_GET["id_message"];
 			$query_where .= " AND mes_id < :id_message";
-			$args_additionnels[":id_message"] = $id_message;
+			$parametres_additionnels[":id_message"] = $id_message;
 		}
 
 		// Si on a un nombre de messages indiqué, on le récupère, sinon on prend 10 par défaut
@@ -42,30 +42,92 @@
 			$nb_messages = 10;
 		}
 
-		
 
+
+
+		/**
+		 * Récupération des utilisateurs participant
+		 */
+		
+		// préparation de la requête
+		$query = "SELECT
+			uti_id,
+			uti_identifiant,
+			uti_droits,
+			adh_id,
+			adh_nom,
+			adh_prenom,
+			adh_ville
+			FROM rel_conversation_utilisateur
+			INNER JOIN utilisateur ON uti_id = rcu_uti_id
+			LEFT JOIN adherent ON adh_id = uti_adh_id
+			WHERE rcu_con_id = :con_id
+		";
+
+		$stmt = $db->database->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+
+		try{
+
+			$stmt->execute($parametres = array(
+				':con_id' => $id_conversation
+			));
+			$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+			$participants = array();
+			foreach($result as $row){
+				$participant = array();
+				$participant['utilisateur'] = array_filter_key_prefix($row, 'uti');
+				$participant['adherent'] = ($row['adh_id'] != null) ? array_filter_key_prefix($row, 'adh') : null;
+				$participants[] = $participant;
+			}
+
+		} catch(PDOException $e) {
+
+			stopWithError($e, "Erreur lors de la récupération des participants");
+
+		}
+
+
+
+
+
+
+		/**
+		 * Récupération des messages
+		 */
+		
 		// préparation de la requête
 		$query = "SELECT mes_id,
 			mes_uti_id_emetteur,
 			mes_texte,
-			mes_date,
-			mes_lu
+			mes_date
 			FROM conversation
 			INNER JOIN message ON mes_con_id = con_id
-			WHERE (:id_emetteur IN (con_uti_id_1, con_uti_id_2) OR :id_destinataire IN (con_uti_id_1, con_uti_id_2))
+			WHERE con_id = :con_id
 			$query_where
 			ORDER BY mes_date DESC
 			LIMIT :nb_messages
 		";
 
 		$stmt = $db->database->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-		$args = array(
-			':id_emetteur' => $id_emetteur,
-			':id_destinataire' => $id_conversation,
+		$parametres = array(
+			':con_id' => $id_conversation,
 			':nb_messages' => $nb_messages
 		);
-		$args = array_merge($args, $args_additionnels);
-		$stmt->execute($args);
+		$args = array_merge($parametres, $parametres_additionnels);
+
+
+		try{
+
+			$stmt->execute($parametres);
+			$messages = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+		} catch(PDOException $e) {
+
+			stopWithError($e, "Erreur lors de la récupération des messages");
+
+		}
+
 		$db->close();
 		
 		
@@ -74,7 +136,8 @@
 		if($stmt->rowCount() > 0){
 
 			// récupération des résultats
-			$response["messages"] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			$response["participants"] = $participants;
+			$response["messages"] = $messages;
 			
 			// succès
 			$response["success"] = 1;
