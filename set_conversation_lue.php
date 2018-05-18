@@ -1,7 +1,7 @@
 <?php
 	
 	/*
-	* Marque tous les messages d'une conversation comme lus
+	* Marque tous les messages d'une conversation comme lus pour l'utilisateur
 	*/
 	
 	// Préparaton des infos nécessaires pour la transaction
@@ -22,10 +22,10 @@
 		$con_id = $_POST["id_conversation"];
 
 		// préparation de la requête
-		$query = "UPDATE message SET
-			mes_lu = 1
-			WHERE mes_con_id = :con_id
-			AND mes_uti_id_emetteur != :uti_id";
+		$query = "UPDATE rel_conversation_utilisateur SET
+			rcu_nb_messages_non_lus = 0
+			WHERE rcu_con_id = :con_id
+			AND rcu_uti_id = :uti_id";
 
 		$stmt = $db->database->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 

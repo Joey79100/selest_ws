@@ -24,6 +24,16 @@
 		$mes_texte = $_POST['texte'];
 
 
+
+		// démarrage de la transaction SQL
+		$db->database->beginTransaction();
+
+
+		
+		/**
+		 * On ajoute le message à la conversation
+		 */
+
 		// préparation de la requête
 		$query = "INSERT INTO message (mes_con_id, mes_uti_id_emetteur, mes_texte)
 		VALUES (:mes_con_id, :mes_uti_id_emetteur, :mes_texte)";
@@ -43,17 +53,50 @@
 			
 			// récupération de l'id inséré
 			$mes_id = $db->database->lastInsertId();
-
-			// succès
-			$response["success"] = 1;
-			$response["message"]["mes_id"] = $mes_id;
-			$code = CODE_CREATED_CONTENT;
+			$message["mes_id"] = $mes_id;
 
 		} catch (PDOException $e) {
 
-			stopWithError($e, "Echec de l'ajout du message");
+			stopWithError($e, "Echec de l'ajout du message", true);
 
 		}
+
+
+		
+		/**
+		 * On augmente le nombre de messages non lus pour chaque utilisateur
+		 */
+
+		// préparation de la requête
+		$query = "UPDATE rel_conversation_utilisateur SET
+			rcu_nb_messages_non_lus = rcu_nb_messages_non_lus + 1
+			WHERE rcu_con_id = :rcu_con_id";
+
+		// préparation des paramètres
+		$parametres = array(
+			':rcu_con_id' => $con_id
+		);
+
+		$stmt = $db->database->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+
+		try{
+			// lancement de la requête d'insertion du message
+			$stmt->execute($parametres);	
+
+		} catch (PDOException $e) {
+
+			stopWithError($e, "Echec de l'ajout du message", true);
+
+		}
+
+
+
+
+		// validation de la transaction SQL
+		$db->database->commit();
+		$response["success"] = 1;
+		$response["message"] = $message;
+		$code = CODE_CREATED_CONTENT;
 
 
 		$db->close();

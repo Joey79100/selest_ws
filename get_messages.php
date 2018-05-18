@@ -1,7 +1,7 @@
 <?php
 	
 	/*
-	* Récupération les messages entre deux utilisateurs
+	* Récupération les messages d'une conversation
 	*/
 	
 	// Préparaton des infos nécessaires pour la transaction
@@ -13,9 +13,9 @@
 	
 
 	// vérification de la présence des données
-	if (isset($_GET["id_destinataire"])) {
+	if (isset($_GET["id_conversation"])) {
 		
-		$id_destinataire = $_GET["id_destinataire"];
+		$id_conversation = $_GET["id_conversation"];
 		$query_where = "";
 		$args_additionnels = array();
 		
@@ -42,16 +42,7 @@
 			$nb_messages = 10;
 		}
 
-		/* 
-			$query = "SELECT mes_id, mes_texte, mes_uti_id_emetteur, mes_uti_id_destinataire, mes_date
-				FROM message
-				WHERE ((mes_uti_id_emetteur LIKE :id_emetteur AND mes_uti_id_destinataire LIKE :id_destinataire)
-				OR (mes_uti_id_destinataire LIKE :id_emetteur2 AND mes_uti_id_emetteur LIKE :id_destinataire2))
-				$query_where
-				ORDER BY mes_date DESC
-				LIMIT :nb_messages
-			";
-		*/	
+		
 
 		// préparation de la requête
 		$query = "SELECT mes_id,
@@ -70,7 +61,7 @@
 		$stmt = $db->database->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 		$args = array(
 			':id_emetteur' => $id_emetteur,
-			':id_destinataire' => $id_destinataire,
+			':id_destinataire' => $id_conversation,
 			':nb_messages' => $nb_messages
 		);
 		$args = array_merge($args, $args_additionnels);

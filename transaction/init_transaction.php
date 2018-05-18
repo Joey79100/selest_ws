@@ -52,7 +52,7 @@ function array_filter_key_prefix($array, $prefix){
  */
 function stopWithError($exception, $message = "", $stopTransaction = false){
 
-	global $response, $db;
+	global $db;
 
 	if($stopTransaction){
 
@@ -60,6 +60,8 @@ function stopWithError($exception, $message = "", $stopTransaction = false){
 		$db->database->rollBack();
 
 	}
+	
+	$response = array();
 
 	$response["success"] = 0;
 	$response["error"] = $exception->getCode();
