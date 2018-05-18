@@ -4,6 +4,7 @@ ___
 * **Requêtes de lecture**
 	* [`Récupérer toutes les catégories`](#récupérer-toutes-les-catégories)
 	* [`Récupérer les offres ou les demandes d'une catégorie`](#récupérer-les-offres-ou-les-demandes-d'une-catégorie)
+	* [`Récupérer les prestations à venir`](#récupérer-les-prestations-à-venir)
 * **Requêtes d'écriture**
 	* [`Ajouter une offre ou une demande`](#ajouter-une-offre-ou-une-demande)
 	* [`Ajouter une réponse à une offre`](#ajouter-une-réponse-à-une-offre)
@@ -27,6 +28,16 @@ Récupère les offres et les demandes actives, éventuellement d'une catégorie 
 * Paramètres :
 	* `type` - prend uniquement deux valeurs : `offre` ou `demande`
 	* `cat_id` (*optionnel*) - ID de la catégorie (pour ne chercher les prestations que d'une catégorie)
+
+
+### Récupérer les prestations à venir
+Récupère les prestations pas encore réalisées auxquelles l'adhérent a répondu.
+Pour chaque prestation on récupère l'adhérent auteur, ainsi et les autres participants (les autres adhérents ayant également répondu).
+
+* Route : `get_prestations_categorie.php` 
+* Méthode : `GET`
+* Paramètres :
+	* `id_adherent` (*optionnel, admin seulement*) - ID de l'adhérent pour qui voir les prestations auxquelles il va participer
 
 
 

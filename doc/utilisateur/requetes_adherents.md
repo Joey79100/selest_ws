@@ -4,7 +4,6 @@ ___
 * **Requêtes de lecture**
 	* [`Récupérer un adhérent`](#récupérer-un-adhérent)
 	* [`Récupérer tous les adhérents`](#récupérer-tous-les-adhérents)
-	* [`Récupérer les prestations à venir`](#récupérer-les-prestations-à-venir)
 * **Requêtes d'écriture**
 	* [`Ajouter un adhérent`](#ajouter-un-adhérent)
 ___
@@ -25,16 +24,6 @@ Récupère l'intégralité des informations d'un adhérent.
 Récupère l'ensemble des adhérents avec leurs informations basiques (nom prénom).
 * Route : `get_adherents.php` 
 * Méthode : `GET`
-
-
-### Récupérer les prestations à venir
-Récupère les prestations pas encore réalisées auxquelles l'adhérent a répondu.
-Pour chaque prestation on récupère l'adhérent auteur, ainsi et les autres participants (les autres adhérents ayant également répondu).
-
-* Route : `get_prestations_categorie.php` 
-* Méthode : `GET`
-* Paramètres :
-	* `ID adhérent` (*optionnel, admin seulement*) - ID de l'adhérent pour qui voir les prestations auxquelles il va participer
 
 
 
