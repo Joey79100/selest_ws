@@ -1,7 +1,7 @@
 <?php
 	
 	/*
-	* Ajout d'une réponse d'un adhérent à une prestation
+	* Suppression d'une réponse d'un adhérent à une prestation
 	*/
 	
 	// Préparaton des infos nécessaires pour la transaction
@@ -10,7 +10,7 @@
 
 	// stopper l'exécution du script si l'utilisateur n'est pas connecté
 	check_connection(RIGHTS_WRITER);
-	
+
 
 	// vérification de la présence des données
 	if (
@@ -23,9 +23,11 @@
 			$pre_id = $_POST['pre_id'];
 			$adh_id = $_SESSION['selest_ws']['uti_adh_id'];
 
+			
 			// préparation de la requête
-			$query = "INSERT INTO rel_prestation_adherent (rpa_pre_id, rpa_adh_id)
-				VALUES (:pre_id, :adh_id)";
+			$query = "DELETE FROM rel_prestation_adherent
+				WHERE rpa_pre_id = :pre_id
+				AND rpa_adh_id = :adh_id";
 
 			// préparation des paramètres
 			$parametres = array(

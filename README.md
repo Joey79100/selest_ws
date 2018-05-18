@@ -61,7 +61,7 @@ Un code HTTP est renvoyé avec la réponse en fonction du résultat de la requê
 
 * `200` (`CODE_OK`) : trouvé
 * `201` (`CODE_CREATED_CONTENT`) : l'élément a été créé, retourne le contenu
-* `204` (`CODE_CREATED_NO_CONTENT`) : l'élément a été créé, ne retourne rien
+* `204` (`CODE_NO_CONTENT`) : l'élément a été créé, ne retourne rien
 * `400` (`CODE_BAD_REQUEST`) : la requête est incorrecte
 * `401` (`CODE_UNAUTHORIZED`) : utilisateur non authentifié
 * `403` (`CODE_FORBIDDEN`) : page non accessible pour cet utilisateur

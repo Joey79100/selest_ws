@@ -7,7 +7,7 @@
 // codes réponse disponibles
 define("CODE_OK", 200);							// trouvé
 define("CODE_CREATED_CONTENT", 201);			// l'élément a été créé, retourne le contenu
-define("CODE_CREATED_NO_CONTENT", 204);			// l'élément a été créé, ne retourne rien
+define("CODE_NO_CONTENT", 204);					// la requête a été effectuée, ne retourne rien
 define("CODE_BAD_REQUEST", 400);				// la requête est incorrecte
 define("CODE_UNAUTHORIZED", 401);				// utilisateur non authentifié
 define("CODE_FORBIDDEN", 403);					// page non accessible pour cet utilisateur

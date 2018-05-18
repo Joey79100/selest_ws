@@ -39,7 +39,7 @@
 
 			// succès
 			$response["success"] = 1;
-			$code = CODE_CREATED_NO_CONTENT;
+			$code = CODE_NO_CONTENT;
 
 		} catch(PDOException $e) {
 
