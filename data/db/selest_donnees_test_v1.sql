@@ -12,6 +12,7 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
 -- Export de données de la table selest.adherent : ~8 rows (environ)
+DELETE FROM `adherent`;
 /*!40000 ALTER TABLE `adherent` DISABLE KEYS */;
 INSERT INTO `adherent` (`adh_id`, `adh_nom`, `adh_prenom`, `adh_telephone`, `adh_mobile`, `adh_email`, `adh_adresse`, `adh_code_postal`, `adh_ville`, `adh_souets`) VALUES
 	(1, 'Chirac', 'Patrick', '0201020304', '0601020304', 'patrick@chirac.fr', '1 là-bas', '12345', 'Très loin', 300),
@@ -24,7 +25,8 @@ INSERT INTO `adherent` (`adh_id`, `adh_nom`, `adh_prenom`, `adh_telephone`, `adh
 	(11, 'Holiday', 'John', '0501020304', '0601020304', 'jean.mich@wanttodo.fr', '1 route du feu rouge', '12345', 'En poudre', 900);
 /*!40000 ALTER TABLE `adherent` ENABLE KEYS */;
 
--- Export de données de la table selest.categorie : ~7 rows (environ)
+-- Export de données de la table selest.categorie : ~8 rows (environ)
+DELETE FROM `categorie`;
 /*!40000 ALTER TABLE `categorie` DISABLE KEYS */;
 INSERT INTO `categorie` (`cat_id`, `cat_nom`) VALUES
 	(1, 'Garde d\'enfants'),
@@ -37,7 +39,8 @@ INSERT INTO `categorie` (`cat_id`, `cat_nom`) VALUES
 	(8, 'Chats');
 /*!40000 ALTER TABLE `categorie` ENABLE KEYS */;
 
--- Export de données de la table selest.conversation : ~22 rows (environ)
+-- Export de données de la table selest.conversation : ~8 rows (environ)
+DELETE FROM `conversation`;
 /*!40000 ALTER TABLE `conversation` DISABLE KEYS */;
 INSERT INTO `conversation` (`con_id`, `con_nom`) VALUES
 	(1, 'testest'),
@@ -51,6 +54,7 @@ INSERT INTO `conversation` (`con_id`, `con_nom`) VALUES
 /*!40000 ALTER TABLE `conversation` ENABLE KEYS */;
 
 -- Export de données de la table selest.historique : ~10 rows (environ)
+DELETE FROM `historique`;
 /*!40000 ALTER TABLE `historique` DISABLE KEYS */;
 INSERT INTO `historique` (`his_pre_id`, `his_adh_id`, `his_type_adherent`, `his_date`, `his_montant`, `his_solde_avant`, `his_solde_apres`) VALUES
 	(11, 2, 'auteur', '2018-05-17 16:27:53', 50, 2080, 2380),
@@ -66,13 +70,15 @@ INSERT INTO `historique` (`his_pre_id`, `his_adh_id`, `his_type_adherent`, `his_
 /*!40000 ALTER TABLE `historique` ENABLE KEYS */;
 
 -- Export de données de la table selest.liste_type_prestation : ~2 rows (environ)
+DELETE FROM `liste_type_prestation`;
 /*!40000 ALTER TABLE `liste_type_prestation` DISABLE KEYS */;
 INSERT INTO `liste_type_prestation` (`ltp_id`, `ltp_nom`) VALUES
 	(1, 'offre'),
 	(2, 'demande');
 /*!40000 ALTER TABLE `liste_type_prestation` ENABLE KEYS */;
 
--- Export de données de la table selest.message : ~32 rows (environ)
+-- Export de données de la table selest.message : ~33 rows (environ)
+DELETE FROM `message`;
 /*!40000 ALTER TABLE `message` DISABLE KEYS */;
 INSERT INTO `message` (`mes_id`, `mes_con_id`, `mes_uti_id_emetteur`, `mes_texte`, `mes_date`) VALUES
 	(1, 1, 2, 'Bonjour je voudrais parler à Becky', '2018-03-09 16:39:15'),
@@ -111,24 +117,27 @@ INSERT INTO `message` (`mes_id`, `mes_con_id`, `mes_uti_id_emetteur`, `mes_texte
 /*!40000 ALTER TABLE `message` ENABLE KEYS */;
 
 -- Export de données de la table selest.parametres : 1 rows
+DELETE FROM `parametres`;
 /*!40000 ALTER TABLE `parametres` DISABLE KEYS */;
 INSERT INTO `parametres` (`par_nom`, `par_valeur`) VALUES
 	('nombre_initial_souets', '900');
 /*!40000 ALTER TABLE `parametres` ENABLE KEYS */;
 
 -- Export de données de la table selest.prestation : ~7 rows (environ)
+DELETE FROM `prestation`;
 /*!40000 ALTER TABLE `prestation` DISABLE KEYS */;
 INSERT INTO `prestation` (`pre_id`, `pre_adh_id`, `pre_cat_id`, `pre_ltp_id`, `pre_date_souhaitee_debut`, `pre_date_souhaitee_fin`, `pre_date_realisation`, `pre_description`, `pre_souets`, `pre_date_creation`, `pre_date_modification`) VALUES
 	(1, 1, 7, 1, NULL, NULL, NULL, 'Vente de chats empaillés', 0, '2018-05-16 13:38:29', NULL),
-	(2, 1, 7, 1, '2018-09-01', NULL, '2018-05-17', 'Vente de chats empaillés', 200, '2018-05-16 13:38:29', '2018-05-17 14:40:53'),
+	(2, 2, 7, 1, '2018-09-01', NULL, '2018-05-17', 'Vente de chats empaillés', 200, '2018-05-16 13:38:29', '2018-05-18 11:52:32'),
 	(3, 1, 7, 1, NULL, NULL, NULL, 'Vente de chats empaillés', 0, '2018-05-16 13:38:29', NULL),
-	(4, 1, 7, 2, NULL, NULL, NULL, 'Vente de chats empaillés', 0, '2018-05-16 13:38:29', '2018-05-17 16:03:22'),
+	(4, 1, 7, 2, NULL, NULL, NULL, 'Vente de chats empaillés', 0, '2018-05-16 13:38:29', '2018-05-18 13:55:07'),
 	(5, 1, 7, 1, NULL, NULL, NULL, 'Vente de chats empaillés', 0, '2018-05-16 13:44:16', NULL),
 	(10, 2, 7, 1, '2018-07-01', NULL, NULL, 'Vente de chats empaillés', 0, '2018-05-17 14:04:51', NULL),
 	(11, 2, 5, 1, NULL, NULL, '2018-05-17', 'Superbe massage aux huiles essentielles', 50, '2018-05-17 14:21:26', '2018-05-17 16:31:15');
 /*!40000 ALTER TABLE `prestation` ENABLE KEYS */;
 
--- Export de données de la table selest.rel_conversation_utilisateur : ~13 rows (environ)
+-- Export de données de la table selest.rel_conversation_utilisateur : ~14 rows (environ)
+DELETE FROM `rel_conversation_utilisateur`;
 /*!40000 ALTER TABLE `rel_conversation_utilisateur` DISABLE KEYS */;
 INSERT INTO `rel_conversation_utilisateur` (`rcu_con_id`, `rcu_uti_id`, `rcu_nb_messages_non_lus`) VALUES
 	(1, 2, 0),
@@ -148,15 +157,19 @@ INSERT INTO `rel_conversation_utilisateur` (`rcu_con_id`, `rcu_uti_id`, `rcu_nb_
 /*!40000 ALTER TABLE `rel_conversation_utilisateur` ENABLE KEYS */;
 
 -- Export de données de la table selest.rel_prestation_adherent : ~4 rows (environ)
+DELETE FROM `rel_prestation_adherent`;
 /*!40000 ALTER TABLE `rel_prestation_adherent` DISABLE KEYS */;
 INSERT INTO `rel_prestation_adherent` (`rpa_pre_id`, `rpa_adh_id`) VALUES
 	(2, 1),
 	(4, 1),
+	(2, 3),
 	(11, 3),
+	(2, 4),
 	(11, 4);
 /*!40000 ALTER TABLE `rel_prestation_adherent` ENABLE KEYS */;
 
 -- Export de données de la table selest.utilisateur : ~8 rows (environ)
+DELETE FROM `utilisateur`;
 /*!40000 ALTER TABLE `utilisateur` DISABLE KEYS */;
 INSERT INTO `utilisateur` (`uti_id`, `uti_identifiant`, `uti_mot_de_passe`, `uti_droits`, `uti_adh_id`) VALUES
 	(1, 'plop', 'azerty', 'W', 1),

@@ -1,0 +1,1203 @@
+{
+	"info": {
+		"_postman_id": "085fd01a-2dde-bc3d-2f81-dc8d802e2af3",
+		"name": "selest_ws",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentification",
+			"description": "",
+			"item": [
+				{
+					"name": "S'authentifier (administrateur)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "identifiant",
+									"value": "master",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "mot_de_passe",
+									"value": "system",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/selest_ws/authentification.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"selest_ws",
+								"authentification.php"
+							]
+						},
+						"description": "Tente une connexion utilisateur (adhérent, droits normaux) à la base de données, et si elle a fonctionné, renvoie un token à utiliser pour chaque requête"
+					},
+					"response": []
+				},
+				{
+					"name": "S'authentifier (adhérent - Plop)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "identifiant",
+									"value": "plop",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "mot_de_passe",
+									"value": "azerty",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/selest_ws/authentification.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"selest_ws",
+								"authentification.php"
+							]
+						},
+						"description": "Tente une connexion utilisateur (adhérent, droits normaux) à la base de données, et si elle a fonctionné, renvoie un token à utiliser pour chaque requête"
+					},
+					"response": []
+				},
+				{
+					"name": "S'authentifier (adhérent - Brenda)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "identifiant",
+									"value": "brenda",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "mot_de_passe",
+									"value": "brenda",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/selest_ws/authentification.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"selest_ws",
+								"authentification.php"
+							]
+						},
+						"description": "Tente une connexion utilisateur (adhérent, droits normaux) à la base de données, et si elle a fonctionné, renvoie un token à utiliser pour chaque requête"
+					},
+					"response": []
+				},
+				{
+					"name": "S'authentifier (adhérent - Criquette)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "mot_de_passe",
+									"value": "criquette",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "identifiant",
+									"value": "criquette",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/selest_ws/authentification.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"selest_ws",
+								"authentification.php"
+							]
+						},
+						"description": "Tente une connexion utilisateur (adhérent, droits normaux) à la base de données, et si elle a fonctionné, renvoie un token à utiliser pour chaque requête"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Adhérents",
+			"description": "",
+			"item": [
+				{
+					"name": "Récupérer adhérent",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "d247999470dd08c1972b2bd35fc11b4adfaa8cd3238a96a7ce86cc81be2bad75"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost/selest_ws/get_adherent.php?adh_id=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"selest_ws",
+								"get_adherent.php"
+							],
+							"query": [
+								{
+									"key": "adh_id",
+									"value": "1"
+								}
+							]
+						},
+						"description": "Retourne les informations de l'adhérent d'ID 1"
+					},
+					"response": []
+				},
+				{
+					"name": "Ajouter adhérent",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "80aee8ffa2ef23bf1ec5342db63636bef87fbed23a24c09899f7351d043d13b67d3fb96584d93ad09afc8baebd8d1b170ed4e626e7769623d9b882518c9b03b8"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "adh_nom",
+									"value": "Holiday",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "adh_prenom",
+									"value": "John",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "adh_telephone",
+									"value": "0501020304",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "adh_mobile",
+									"value": "0601020304",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "adh_email",
+									"value": "jean.mich@wanttodo.fr",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "adh_adresse",
+									"value": "1 route du feu rouge",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "adh_code_postal",
+									"value": "12345",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "adh_ville",
+									"value": "En poudre",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/selest_ws/add_adherent.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"selest_ws",
+								"add_adherent.php"
+							]
+						},
+						"description": "Ajoute un adhérent Johnny Haliday"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Messages",
+			"description": "",
+			"item": [
+				{
+					"name": "Récupérer les conversations",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "0f914f4c00d95d3fc0fb78a6bfb45853670b8b42c5c265404f319a79649643b1"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost/selest_ws/get_conversations.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"selest_ws",
+								"get_conversations.php"
+							]
+						},
+						"description": "Récupère la liste des conversations d'un utilisateur, ainsi que le contenu du dernier message dans chaque conversation, et le nombre de messages non lus pour chaque conversation."
+					},
+					"response": []
+				},
+				{
+					"name": "Récupérer conversation (utilisateur)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "0f914f4c00d95d3fc0fb78a6bfb45853670b8b42c5c265404f319a79649643b1"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost/selest_ws/get_messages.php?id_conversation=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"selest_ws",
+								"get_messages.php"
+							],
+							"query": [
+								{
+									"key": "id_message",
+									"value": "2",
+									"description": "Dernier message déjà récupéré par l'application",
+									"disabled": true
+								},
+								{
+									"key": "nb_messages",
+									"value": "5",
+									"description": "Nombre de messages à renvoyer",
+									"disabled": true
+								},
+								{
+									"key": "id_conversation",
+									"value": "2"
+								}
+							]
+						},
+						"description": "Récupère les messages d'une conversation entre l'utilisateur connecté et l'utilisateur dont l'ID est passé en paramètre"
+					},
+					"response": []
+				},
+				{
+					"name": "Ajouter conversation",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "0f914f4c00d95d3fc0fb78a6bfb45853670b8b42c5c265404f319a79649643b1"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id_destinataires",
+									"value": "2,4,3",
+									"description": "ID de ou des utilisateurs destinataires",
+									"type": "text"
+								},
+								{
+									"key": "texte",
+									"value": "testest",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/selest_ws/add_conversation.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"selest_ws",
+								"add_conversation.php"
+							]
+						},
+						"description": "Crée une conversation entre l'utilisateur connecté et les utilisateurs 3 (Criquette Rockwell) et 2 (Brenda Montgomery), et y ajoute un message."
+					},
+					"response": []
+				},
+				{
+					"name": "Ajouter message",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "ef1ae1bf1342ddab57f6d0520fe2f1c9f3103f7c2bc3f977f2b3cefb87e855a8"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id_conversation",
+									"value": "2",
+									"description": "ID de la conversation",
+									"type": "text"
+								},
+								{
+									"key": "texte",
+									"value": "Nous devons nous concerter.",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/selest_ws/add_message.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"selest_ws",
+								"add_message.php"
+							]
+						},
+						"description": "Ajoute un message de l'utilisateur 10 (Criquette Rockwell) à la conversation 3."
+					},
+					"response": []
+				},
+				{
+					"name": "Marquer conversation comme lue",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "43aec69e7265848cba87802c172f6c6dbabf729dd4bb24bdfac56dba6172b436"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id_conversation",
+									"value": "2",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/selest_ws/set_conversation_lue.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"selest_ws",
+								"set_conversation_lue.php"
+							]
+						},
+						"description": "Marque tous les messages d'une conversation comme lus"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Prestations",
+			"description": "",
+			"item": [
+				{
+					"name": "Ajouter offre sans date",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "48fb4079-bc7d-4dc6-b979-4dcc9a81135f",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "fd37ad3c5ef48a2611441e38e96f0652f215bb91be0e9db6046c5f6d8bde4b77"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "pre_cat_id",
+									"value": "5",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "pre_type",
+									"value": "offre",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "pre_date_souhaitee_debut",
+									"value": "",
+									"description": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "pre_date_souhaitee_fin",
+									"value": "",
+									"description": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "pre_description",
+									"value": "Superbe massage aux huiles essentielles",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "pre_souets",
+									"value": "50",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/selest_ws/add_prestation.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"selest_ws",
+								"add_prestation.php"
+							]
+						},
+						"description": "Ajoute une offre dans la catégorie 7 (chats) sans aucune date"
+					},
+					"response": []
+				},
+				{
+					"name": "Ajouter offre avec date début",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "48fb4079-bc7d-4dc6-b979-4dcc9a81135f",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "1be07904fb3708e6516ef5ce8a10aaf9be73dd64df56e0be30d29e240c777f05"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "pre_cat_id",
+									"value": "7",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "pre_type",
+									"value": "offre",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "pre_date_souhaitee_debut",
+									"value": "2018-07-01",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "pre_date_souhaitee_fin",
+									"value": "",
+									"description": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "pre_description",
+									"value": "Vente de chats empaillés",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "pre_souets",
+									"value": "0",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/selest_ws/add_prestation.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"selest_ws",
+								"add_prestation.php"
+							]
+						},
+						"description": "Ajoute une offre dans la catégorie 7 (chats) avec date début"
+					},
+					"response": []
+				},
+				{
+					"name": "Ajouter demande sans date",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "48fb4079-bc7d-4dc6-b979-4dcc9a81135f",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "096ab7450b85ee8b7d0f53d1c0b65d3ad64d4e8f76f9c4c09ad51424dbe906d0"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "pre_cat_id",
+									"value": "7",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "pre_type",
+									"value": "demande",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "pre_date_souhaitee_debut",
+									"value": "",
+									"description": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "pre_date_souhaitee_fin",
+									"value": "",
+									"description": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "pre_description",
+									"value": "Vente de chats empaillés",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "pre_souets",
+									"value": "0",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/selest_ws/add_prestation.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"selest_ws",
+								"add_prestation.php"
+							]
+						},
+						"description": "Ajoute une demande dans la catégorie 7 (chats) sans aucune date"
+					},
+					"response": []
+				},
+				{
+					"name": "Ajouter demande avec date début",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "48fb4079-bc7d-4dc6-b979-4dcc9a81135f",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "096ab7450b85ee8b7d0f53d1c0b65d3ad64d4e8f76f9c4c09ad51424dbe906d0"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "pre_cat_id",
+									"value": "7",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "pre_type",
+									"value": "demande",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "pre_date_souhaitee_debut",
+									"value": "2018-08-12",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "pre_date_souhaitee_fin",
+									"value": "",
+									"description": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "pre_description",
+									"value": "Vente de chats empaillés",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "pre_souets",
+									"value": "0",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/selest_ws/add_prestation.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"selest_ws",
+								"add_prestation.php"
+							]
+						},
+						"description": "Ajoute une demande dans la catégorie 7 (chats) avec date début"
+					},
+					"response": []
+				},
+				{
+					"name": "Récupérer les catégories",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "d247999470dd08c1972b2bd35fc11b4adfaa8cd3238a96a7ce86cc81be2bad75"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost/selest_ws/get_categories.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"selest_ws",
+								"get_categories.php"
+							]
+						},
+						"description": "Retourne toutes les catégories avec le nombre d'offres et le nombre de demandes actives (non réalisées) pour chacune d'elles"
+					},
+					"response": []
+				},
+				{
+					"name": "Récupérer les demandes",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "ea5f8e1f05b86816ce6abd063c2a31b89c2e586a382cd7443e6281169a8670a0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost/selest_ws/get_prestations_categorie.php?type=demande",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"selest_ws",
+								"get_prestations_categorie.php"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "demande"
+								}
+							]
+						},
+						"description": "Retourne toutes les demandes"
+					},
+					"response": []
+				},
+				{
+					"name": "Récupérer les offres",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "ea5f8e1f05b86816ce6abd063c2a31b89c2e586a382cd7443e6281169a8670a0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost/selest_ws/get_prestations_categorie.php?type=offre",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"selest_ws",
+								"get_prestations_categorie.php"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "offre"
+								}
+							]
+						},
+						"description": "Retourne toutes les offres"
+					},
+					"response": []
+				},
+				{
+					"name": "Récupérer prestation",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "7a40f2e53e4914db65e39f8acd2baf9827e2e711da1fcd3f577ffdd33b413138"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost/selest_ws/get_prestation.php?pre_id=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"selest_ws",
+								"get_prestation.php"
+							],
+							"query": [
+								{
+									"key": "pre_id",
+									"value": "2"
+								}
+							]
+						},
+						"description": "Retourne les informations d'une prestation"
+					},
+					"response": []
+				},
+				{
+					"name": "Ajouter proposition à une prestation",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "50383f646910b0fb42b3f5c6bebbd7618604c26166d607651e3780d4a71bcaa5"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "pre_id",
+									"value": "11",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/selest_ws/add_reponse.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"selest_ws",
+								"add_reponse.php"
+							]
+						},
+						"description": "Ajoute une réponse de l'adhérent 1 à la prestation 4"
+					},
+					"response": []
+				},
+				{
+					"name": "Supprimer proposition à une prestation",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "0f914f4c00d95d3fc0fb78a6bfb45853670b8b42c5c265404f319a79649643b1"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "pre_id",
+									"value": "11",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/selest_ws/del_reponse.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"selest_ws",
+								"del_reponse.php"
+							]
+						},
+						"description": "Ajoute une réponse de l'adhérent 1 à la prestation 4"
+					},
+					"response": []
+				},
+				{
+					"name": "Réaliser prestation",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "ea5f8e1f05b86816ce6abd063c2a31b89c2e586a382cd7443e6281169a8670a0"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "pre_id",
+									"value": "11",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "adh_ids",
+									"value": "3,1",
+									"description": "Adhérents à marquer comme ayant participé (IDs séparés par des virgules)",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/selest_ws/valider_prestation.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"selest_ws",
+								"valider_prestation.php"
+							]
+						},
+						"description": "Valide une prestation en indiquant quels participants (parmis ceux ayant répondu ou non) ont participé, et transfère les Souets comme il le faut."
+					},
+					"response": []
+				},
+				{
+					"name": "Récupérer les prestations à venir",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "0f914f4c00d95d3fc0fb78a6bfb45853670b8b42c5c265404f319a79649643b1"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost/selest_ws/get_prestations_a_venir.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"selest_ws",
+								"get_prestations_a_venir.php"
+							]
+						},
+						"description": "Récupère les offres/demandes pas encore réalisées auxquelles l'utilisateur a répondu."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Administration",
+			"description": "",
+			"item": [
+				{
+					"name": "Récupérer adhérents en attente",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "27d8c37dd9edef5566fa53b102795bfc38b433b219f22b3736cf0360babea1b4"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost/selest_ws/get_adherents_en_attente.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"selest_ws",
+								"get_adherents_en_attente.php"
+							]
+						},
+						"description": "Retourne la liste des adhérents n'ayant pas d'utilisateur associés (donc ne pouvant pas encore se connecter)"
+					},
+					"response": []
+				},
+				{
+					"name": "Récupérer conversation (administrateur)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "1836980b50a8e40366295e824eb112f9567b8cc20927af4f1009d2b2f0da1f82"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost/selest_ws/get_conversation.php?id_destinataire=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"selest_ws",
+								"get_conversation.php"
+							],
+							"query": [
+								{
+									"key": "id_emetteur",
+									"value": "3",
+									"description": "Second ID d'utilisateur, utilisable uniquement par les admins pour voir des conversations des adhérents",
+									"disabled": true
+								},
+								{
+									"key": "id_destinataire",
+									"value": "2"
+								},
+								{
+									"key": "id_message",
+									"value": "15",
+									"description": "Dernier message déjà récupéré par l'application",
+									"disabled": true
+								},
+								{
+									"key": "nb_messages",
+									"value": "3",
+									"description": "Nombre de messages à renvoyer",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Récupère les messages d'une conversation entre deux utilisateurs dont les IDs sont passés en paramètre"
+					},
+					"response": []
+				},
+				{
+					"name": "Ajouter catégorie",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "c380442cb1761109e86c35060cb44880a0b7dcf4cbcfa9e3f42c01dbf795b1ecc0d3f9386dcbc3a9a3cd38519cb1b0d2c7b9f2b84e5f722cdddcd0e03c7aec52"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "cat_nom",
+									"value": "Chats",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/selest_ws/add_categorie.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"selest_ws",
+								"add_categorie.php"
+							]
+						},
+						"description": "Ajoute une catégorie Chats"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
