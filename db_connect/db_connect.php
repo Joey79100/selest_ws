@@ -42,10 +42,9 @@ class DB_CONNECT {
 			);
 		} catch (PDOException $e) {
 			$this->database = null;
-			// die('Erreur de connexion : ' . $e->getMessage() . '<br/>');
 
 			$response["success"] = 0;
-			$response["message"] = "Impossible de contacter la base de données";
+			$response["message"] = "Impossible de contacter la base de données :\n".$e->getMessage();
 			$code = CODE_SERVICE_UNAVAILABLE;
 			
 			require_once __DIR__ . '/transaction/display_result.php';
