@@ -7,6 +7,21 @@
  */
 function is_connected(){
 
+	//$headers = apache_request_headers();
+	$token = $_POST['token'] ?? $_GET['token'] ?? null;
+
+	// vérification que le token passé dans la requête existe bien pour cette session
+	return (
+			isset($token)
+		AND isset($_SESSION['selest_ws']['token'])
+		AND $_SESSION['selest_ws']['token'] == $token
+		AND isset($_SESSION['selest_ws']['uti_id'])
+		AND isset($_SESSION['selest_ws']['uti_droits'])
+	);
+
+}
+ /* function is_connected(){
+
 	$headers = apache_request_headers();
 
 	// vérification que le token passé dans la requête existe bien pour cette session
@@ -18,7 +33,7 @@ function is_connected(){
 		AND isset($_SESSION['selest_ws']['uti_droits'])
 	);
 
-}
+} */
 
 /**
  * Vérifie si l'utilisateur a les droits requis
